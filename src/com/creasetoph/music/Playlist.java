@@ -27,6 +27,11 @@ public class Playlist {
 		return _playlistTracks.size();
 	}
 	
+	public void clearPlaylist() {
+	    _playlistTracks.clear();
+	    setCurrentTrackIndex(0);
+	}
+	
 	public PlaylistTrack getCurrentPlaylistTrack() {
 		return _playlistTracks.get(getCurrentTrackIndex());
 	}

@@ -15,17 +15,22 @@ public class MediaData {
     
     private Map<String,Object> _mediaMap = new HashMap<String,Object>();
     
-    public static MediaData getInstance(String json) {
+    public static MediaData getInstance() {
         if(_instance == null) {
-            _instance = new MediaData(json);
+            _instance = new MediaData();
         }
         return _instance;
     }
     
-    private MediaData(String json) {
+    public void setMap(Map<String,Object> map) {
+        Logger.log(map.toString());
+        _mediaMap = map;
+    }
+    
+    public void parseJSON(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
-            _mediaMap = parseJsonObject(jsonObject);
+            setMap(parseJsonObject(jsonObject));
         }catch(JSONException e) {
            Logger.log(e);
         }
@@ -38,9 +43,10 @@ public class MediaData {
             try {
                 map.put(key,parseJsonObject(json.getJSONObject(key)));
             }catch(JSONException e) {
-                map.put(key,"track");
+                map.put(key,"file");
             }
         }; 
+        map.remove(".DS_Store");
         return map;
     }
     

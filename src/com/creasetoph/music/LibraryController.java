@@ -22,8 +22,8 @@ public class LibraryController {
 	
 	private LibraryController(){}
 	
-	public void setLibrary(String json) {
-	    _mediaData = MediaData.getInstance(json);
+	public void setLibrary() {
+	    _mediaData = MediaData.getInstance();
 	    _libraryList = getList(_mediaData.get(),ARTIST);
 	}  
 	
@@ -43,16 +43,22 @@ public class LibraryController {
 	    return _libraryList;
 	}
 	
+	public int getLibrarySize() {
+	    return _libraryList.size();
+	}
+	
 	public void addAlbumToPlaylist(String selection,int index) {
 		String artist = "";
-		for(int i = index;i > 0;i--) {
+		for(int i = index;i >= 0;i--) {
 			if(_libraryList.get(i).getType() == "artist") {
 				artist = _libraryList.get(i).getValue();
 				break;
 			}
 		}
 		PlaylistController pc = PlaylistController.getInstance();
+		Logger.log("Artist: " + artist + " Selection: " + selection);
 	    ArrayList<LibraryItem> list = getList(_mediaData.get(artist,selection),TRACK);
+	    pc.clearPlaylist();
 		for(LibraryItem item : list) {
 			pc.addToPlaylist(artist,selection,item.getValue());
 		}
@@ -71,6 +77,7 @@ public class LibraryController {
 	}
 	
 	public void addAlbums(String artist,int index) {
+	    Logger.log("Artists: " + artist);
 	    ArrayList<String> albums = _mediaData.get(artist);
 		_libraryList.addAll(index + 1,getList(albums,ALBUM));
 	}

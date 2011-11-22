@@ -43,6 +43,10 @@ public class PlaylistController {
 		_playlist.addToPlaylist(artist,album,track);
 	}
 	
+	public void clearPlaylist() {
+	    _playlist.clearPlaylist();
+	}
+	
 	public void playPause() {
 		if(_playing) {
 			pause();

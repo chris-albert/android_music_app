@@ -24,32 +24,17 @@ public class Creasetoph_musicActivity extends Activity {
 	//Preferences 
 	SharedPreferences settings;
 	
-	protected Activity self;
 	protected ProgressDialog _progressDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _progressDialog = ProgressDialog.show(this,"","Loading, Please Wait...",true);
-        setUpPrefs();
-        self = this;   
-        new DownloadJSONTask().execute("");
-        HttpMediaModel hmm = HttpMediaModel.getInstance();
-        hmm.getMedia(new Callable<Object>() {
-            public Object call() throws Exception {
-                Logger.log("Inside callback");
-                return null;
-            }
-        });
-    }
-     
-    public String getJSON() {
-    	String json_url = settings.getString(BASE_JSON_URL, DEFAULT_BASE_JSON_URL);
-    	return HttpUtil.httpGet(json_url);
+        askMediaLocation();
     }
     
-    public void setUpPrefs() {
-    	settings = getSharedPreferences(PREF_NAME, 0);
+    private void onMediaFetch() {
+        Intent intent = new Intent(this,LibraryActivity.class);
+        startActivity(intent);
     }
     
     protected void onStop() {
@@ -57,32 +42,41 @@ public class Creasetoph_musicActivity extends Activity {
        _progressDialog.dismiss(); 
     }
     
-    private class DownloadJSONTask extends AsyncTask<String,Void,String> {
-
-		@Override
-		protected String doInBackground(String... params) {
-			return getJSON();
-		}
-		
-		protected void onPostExecute(String json) {
-			if(json != null) {
-    			LibraryController.getInstance().setLibrary(json);
-    			Intent intent = new Intent(self,LibraryActivity.class);
-                startActivity(intent);
-			}else { 
-			    AlertDialog.Builder errorDialog = new AlertDialog.Builder(self);
-			    errorDialog.setMessage("There was an error fetching JSON")
-			        .setCancelable(false)
-			        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            self.finish();
-                            return;
-                        }
-                    });
-			    AlertDialog ad = errorDialog.create();
-			    ad.show();
-			}
-		}
+    private void askMediaLocation() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Where would you like to get your media?")
+            .setCancelable(false)
+            .setPositiveButton("Local",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int which) {
+                    getMediaFromDisk();
+                }
+            })
+            .setNegativeButton("Network",new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog,int which) {
+                    getMediaFromNetwork();
+                }
+            });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+    
+    private void getMediaFromNetwork() {
+        _progressDialog = ProgressDialog.show(this,"","Loading from network, Please Wait...",true);
+        HttpMediaModel.getInstance().getMedia(new Callable<Object>() {
+            public Object call() throws Exception {
+                onMediaFetch();
+                return null;
+            }
+        });
+    }
+    
+    private void getMediaFromDisk() {
+        _progressDialog = ProgressDialog.show(this,"","Loading from disk, Please Wait...",true);
+        LocalMediaModel.getInstance().getMedia(new Callable<Object>() {
+            public Object call() throws Exception {
+                onMediaFetch();
+                return null;
+            }
+        });
     }
 }

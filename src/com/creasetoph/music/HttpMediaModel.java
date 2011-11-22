@@ -26,7 +26,8 @@ public class HttpMediaModel extends MediaModel{
         }
         
         protected void onPostExecute(String json) {
-            try {
+            try { 
+                MediaData.getInstance().parseJSON(json);
                 _callback.call();
             }catch(Exception e) {
                 Logger.log(e);
