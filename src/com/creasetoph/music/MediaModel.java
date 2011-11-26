@@ -1,6 +1,5 @@
 package com.creasetoph.music;
 
-import android.content.SharedPreferences;
 
 public abstract class MediaModel {
     

@@ -1,11 +1,20 @@
 package com.creasetoph.music;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
+import com.creasetoph.music.model.MusicModel;
+import com.creasetoph.music.model.MusicModelManager;
+import com.creasetoph.music.objects.Album;
+import com.creasetoph.music.objects.Artist;
+import com.creasetoph.music.objects.Library;
+import com.creasetoph.music.objects.Track;
 
 public class LibraryController {
 	
 	private ArrayList<LibraryItem> _libraryList = new ArrayList<LibraryItem>();
-	private MediaData _mediaData;
+	private MusicModel _model = null;
+	//private MediaData _mediaData;
 	
 	private static LibraryController _instance = null;
 	
@@ -20,19 +29,20 @@ public class LibraryController {
 		return _instance;
 	}
 	
-	private LibraryController(){}
+	private LibraryController(){
+		_model = MusicModelManager.fetchModel();
+		setUpLibraryList();
+	}
 	
-	public void setLibrary() {
-	    _mediaData = MediaData.getInstance();
-	    _libraryList = getList(_mediaData.get(),ARTIST);
-	}  
+	private void setUpLibraryList() {
+		for(Artist artist: _model.getLibrary().getArtistList()) {
+			_libraryList.add(new LibraryItem(ARTIST,artist.getName()));
+		}
+		Collections.sort(_libraryList);
+	}
 	
 	private ArrayList<LibraryItem> getList(ArrayList<String> items,String type) {
-	    ArrayList<LibraryItem> list = new ArrayList<LibraryItem>();
-	    for(String key: items) {
-            list.add(new LibraryItem(type,key));
-        }
-	    return list;
+		return _libraryList;
 	}
 	
 	public void setLibrary(ArrayList<LibraryItem> libraryList) {
@@ -57,17 +67,15 @@ public class LibraryController {
 		}
 		PlaylistController pc = PlaylistController.getInstance();
 		Logger.log("Artist: " + artist + " Selection: " + selection);
-	    ArrayList<LibraryItem> list = getList(_mediaData.get(artist,selection),TRACK);
-	    pc.clearPlaylist();
-		for(LibraryItem item : list) {
-			pc.addToPlaylist(artist,selection,item.getValue());
+		for(Track track: _model.getLibrary().getTrackList(artist, selection)) {
+			pc.addToPlaylist(artist,selection,track.getName());
 		}
 		pc.playPause();
 	}
 	
 	public void removeAlbums(String artist,int index) {
 		int start = index + 1;
-		for(int i = start;i < _libraryList.size();i++) {
+		for(int i = start;i <= _libraryList.size();i++) {
 			if(_libraryList.get(start).getType() == "album") {
 				_libraryList.remove(start);
 			}else {
@@ -77,8 +85,11 @@ public class LibraryController {
 	}
 	
 	public void addAlbums(String artist,int index) {
-	    Logger.log("Artists: " + artist);
-	    ArrayList<String> albums = _mediaData.get(artist);
-		_libraryList.addAll(index + 1,getList(albums,ALBUM));
+		Logger.log("Artist selected: " + artist);
+		ArrayList<LibraryItem> albums = new ArrayList<LibraryItem>();
+		for(Album album: _model.getLibrary().getAlbumList(artist)) {
+			albums.add(new LibraryItem(ALBUM,album.getName()));
+		}
+		_libraryList.addAll(index + 1,albums);
 	}
 }

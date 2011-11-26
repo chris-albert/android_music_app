@@ -9,7 +9,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MediaData {
+public class MediaData {	
     
     private static MediaData _instance = null;
     

@@ -25,7 +25,6 @@ public class LibraryActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _controller = LibraryController.getInstance();
-        _controller.setLibrary();
         createListView(_controller.getLibrary());
 	}
 	
@@ -52,7 +51,9 @@ public class LibraryActivity extends Activity {
         if(view.getId() == R.id.artist_item) {
             TextView tv = (TextView) view.findViewById(R.id.artist_name);
             String selection = tv.getText().toString();
-            if(_controller.getLibrarySize() < position + 1 && _controller.getLibrary().get(position + 1).getType() == "album") {
+            Logger.log("Size: " + _controller.getLibrarySize());
+            Logger.log("Position: " + position);
+            if(_controller.getLibrarySize() > position + 1 && _controller.getLibrary().get(position + 1).getType() == "album") {
                 _controller.removeAlbums(selection,position);
             }else {
                 _controller.addAlbums(selection,position);
