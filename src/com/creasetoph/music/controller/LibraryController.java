@@ -14,10 +14,9 @@ import com.creasetoph.music.object.Track;
 
 public class LibraryController {
 
-    private ArrayList<LibraryItem> _libraryList = new ArrayList<LibraryItem>();
-    private MusicModel             _model       = null;
-    private PlaylistController _playlistController = null;
-
+    private ArrayList<LibraryItem> _libraryList        = new ArrayList<LibraryItem>();
+    private MusicModel             _model              = null;
+    private PlaylistController     _playlistController = null;
 
     private static LibraryController _instance = null;
 
@@ -40,13 +39,9 @@ public class LibraryController {
 
     private void setUpLibraryList() {
         for (Artist artist : _model.getLibrary().getArtistList()) {
-            _libraryList.add(new LibraryItem(ARTIST, artist.getName()));
+            _libraryList.add(new LibraryItem(LibraryItem.Type.Artist, artist.getName()));
         }
         Collections.sort(_libraryList);
-    }
-
-    private ArrayList<LibraryItem> getList(ArrayList<String> items, String type) {
-        return _libraryList;
     }
 
     public void setLibrary(ArrayList<LibraryItem> libraryList) {
@@ -64,7 +59,7 @@ public class LibraryController {
     public void addAlbumToPlaylist(String selection, int index) {
         String artist = "";
         for (int i = index; i >= 0; i--) {
-            if (_libraryList.get(i).getType() == "artist") {
+            if (_libraryList.get(i).getType() == LibraryItem.Type.Artist) {
                 artist = _libraryList.get(i).getValue();
                 break;
             }
@@ -88,7 +83,7 @@ public class LibraryController {
     public void removeAlbums(String artist, int index) {
         int start = index + 1;
         for (int i = start; i <= _libraryList.size(); i++) {
-            if (_libraryList.get(start).getType() == "album") {
+            if (_libraryList.get(start).getType() == LibraryItem.Type.Album) {
                 _libraryList.remove(start);
             } else {
                 break;
@@ -101,7 +96,7 @@ public class LibraryController {
         ArrayList<LibraryItem> albums = new ArrayList<LibraryItem>();
         try {
             for (Album album : _model.getLibrary().getArtist(artist).getAlbums()) {
-                albums.add(new LibraryItem(ALBUM, album.getName()));
+                albums.add(new LibraryItem(LibraryItem.Type.Album, album.getName()));
             }
             _libraryList.addAll(index + 1, albums);
         } catch (NullPointerException npe) {

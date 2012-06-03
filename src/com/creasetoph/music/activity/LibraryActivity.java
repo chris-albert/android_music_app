@@ -61,7 +61,8 @@ public class LibraryActivity extends Activity {
             String selection = tv.getText().toString();
             Logger.info("Size: " + _controller.getLibrarySize());
             Logger.info("Position: " + position);
-            if (_controller.getLibrarySize() > position + 1 && _controller.getLibrary().get(position + 1).getType() == "album") {
+            if (_controller.getLibrarySize() > position + 1 &&
+                _controller.getLibrary().get(position + 1).getType() == LibraryItem.Type.Album) {
                 _controller.removeAlbums(selection, position);
             } else {
                 _controller.addAlbums(selection, position);

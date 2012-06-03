@@ -2,19 +2,23 @@ package com.creasetoph.music;
 
 public class LibraryItem implements Comparable<LibraryItem> {
 
-    private String _type;
+    public enum Type {
+        Artist,Album,Track
+    }
+
+    private Type _type;
     private String _value;
 
-    public LibraryItem(String type, String value) {
+    public LibraryItem(Type type, String value) {
         setType(type);
         setValue(value);
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         _type = type;
     }
 
-    public String getType() {
+    public Type getType() {
         return _type;
     }
 
@@ -24,6 +28,10 @@ public class LibraryItem implements Comparable<LibraryItem> {
 
     public String getValue() {
         return _value;
+    }
+
+    public boolean typeEquals(Type type) {
+        return _type == type;
     }
 
     public int compareTo(LibraryItem another) {

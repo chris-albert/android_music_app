@@ -3,10 +3,8 @@ package com.creasetoph.music.object;
 /**
  * Track object has a track name
  */
-public class Track implements Comparable<Track> {
+public class Track extends MusicItem implements Comparable<Track> {
 
-    //Track name
-    private String _name = "";
     //Artist name
     private String _artist = "";
     //Album name
@@ -59,33 +57,6 @@ public class Track implements Comparable<Track> {
      */
     public void setAlbum(String album) {
         _album = album;
-    }
-
-    /**
-     * Getter for the track name
-     *
-     * @return Track name
-     */
-    public String getName() {
-        return _name;
-    }
-
-    /**
-     * Setter for the track name
-     *
-     * @param name Track name
-     */
-    public void setName(String name) {
-        _name = name;
-    }
-
-    /**
-     * Pretty prints this object
-     *
-     * @return The track name
-     */
-    public String toString() {
-        return getName();
     }
 
     /**

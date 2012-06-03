@@ -7,17 +7,15 @@ import java.util.Collections;
 /**
  * Album object has name and holds tracks
  */
-public class Album implements Comparable<Album> {
+public class Album extends MusicItem implements Comparable<Album> {
 
     //Tracks for this album
     private ArrayList<Track> _tracks = new ArrayList<Track>();
-    //Album name
-    private String _name = "";
     //Artist name
     private String _artist = "";
 
     /**
-     * Constructor sets the artist and albim name
+     * Constructor sets the artist and album name
      *
      * @param artist Artist name
      * @param name   Album name
@@ -43,24 +41,6 @@ public class Album implements Comparable<Album> {
      */
     public void setArtist(String artist) {
         _artist = artist;
-    }
-
-    /**
-     * Getter for album name
-     *
-     * @return Album name
-     */
-    public String getName() {
-        return _name;
-    }
-
-    /**
-     * Setter for album name
-     *
-     * @param name Album name
-     */
-    public void setName(String name) {
-        _name = name;
     }
 
     /**
@@ -101,15 +81,6 @@ public class Album implements Comparable<Album> {
             }
         }
         return null;
-    }
-
-    /**
-     * Pretty prints this object
-     *
-     * @return The album name
-     */
-    public String toString() {
-        return getName();
     }
 
     /**

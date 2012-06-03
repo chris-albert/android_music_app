@@ -2,14 +2,8 @@ package com.creasetoph.music.model;
 
 import java.util.Iterator;
 
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.view.View;
 import com.creasetoph.music.activity.Creasetoph_musicActivity;
-import com.creasetoph.music.activity.LibraryActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 

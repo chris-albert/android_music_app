@@ -6,12 +6,10 @@ import java.util.Collections;
 /**
  * Artist object has a name and holds albums
  */
-public class Artist {
+public class Artist extends MusicItem {
 
     //Albums for this artist
     private ArrayList<Album> _albums = new ArrayList<Album>();
-    //Artist name
-    private String _name = "";
 
     /**
      * Constructor sets name for artist
@@ -20,24 +18,6 @@ public class Artist {
      */
     public Artist(String name) {
         setName(name);
-    }
-
-    /**
-     * Getter for artist name
-     *
-     * @return Artist name
-     */
-    public String getName() {
-        return _name;
-    }
-
-    /**
-     * Setter for artist name
-     *
-     * @param name Artist name
-     */
-    public void setName(String name) {
-        _name = name;
     }
 
     /**
@@ -78,14 +58,5 @@ public class Artist {
             }
         }
         return null;
-    }
-
-    /**
-     * Pretty prints this object
-     *
-     * @return The artist name
-     */
-    public String toString() {
-        return getName();
     }
 }

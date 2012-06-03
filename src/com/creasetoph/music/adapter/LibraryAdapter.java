@@ -26,7 +26,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
         View v = convertView;
         LibraryItem item = _items.get(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (item.getType().equals("artist")) {
+        if (item.typeEquals(LibraryItem.Type.Artist)) {
             v = li.inflate(R.layout.artist_item, null);
             TextView tv = (TextView) v.findViewById(R.id.artist_name);
             if (tv != null) {
