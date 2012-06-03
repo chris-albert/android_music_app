@@ -4,10 +4,10 @@ import java.io.File;
 
 import android.os.AsyncTask;
 
-import com.creasetoph.music.objects.Album;
-import com.creasetoph.music.objects.Artist;
-import com.creasetoph.music.objects.Library;
-import com.creasetoph.music.objects.Track;
+import com.creasetoph.music.object.Album;
+import com.creasetoph.music.object.Artist;
+import com.creasetoph.music.object.Library;
+import com.creasetoph.music.object.Track;
 
 public class LocalMusicModel extends MusicModel {
 	

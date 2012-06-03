@@ -1,4 +1,6 @@
-package com.creasetoph.music;
+package com.creasetoph.music.object;
+
+import com.creasetoph.music.PlaylistTrack;
 
 import java.util.ArrayList;
 

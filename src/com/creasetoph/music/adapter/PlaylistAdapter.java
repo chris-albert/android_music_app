@@ -1,4 +1,4 @@
-package com.creasetoph.music;
+package com.creasetoph.music.adapter;
 
 import java.util.ArrayList;
 
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.creasetoph.music.controller.PlaylistController;
+import com.creasetoph.music.PlaylistItem;
+import com.creasetoph.music.R;
 
 public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
     

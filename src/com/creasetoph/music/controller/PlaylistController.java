@@ -1,9 +1,13 @@
-package com.creasetoph.music;
+package com.creasetoph.music.controller;
 
 import java.util.ArrayList;
 
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import com.creasetoph.music.object.Playlist;
+import com.creasetoph.music.PlaylistItem;
+import com.creasetoph.music.PlaylistTrack;
+import com.creasetoph.music.object.Sound;
 
 public class PlaylistController {
     
@@ -12,7 +16,7 @@ public class PlaylistController {
     private static boolean repeat_album = true;
 	
 	private Playlist _playlist;
-	private Sound    _sound;
+	private Sound _sound;
 	private Boolean  _playing;
 	private Boolean  _paused;
 	

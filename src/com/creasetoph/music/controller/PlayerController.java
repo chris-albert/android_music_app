@@ -1,4 +1,4 @@
-package com.creasetoph.music;
+package com.creasetoph.music.controller;
 
 public class PlayerController {
     

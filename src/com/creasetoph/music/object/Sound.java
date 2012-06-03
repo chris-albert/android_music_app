@@ -1,8 +1,9 @@
-package com.creasetoph.music;
+package com.creasetoph.music.object;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
+import com.creasetoph.music.util.Logger;
 
 public class Sound {
 	

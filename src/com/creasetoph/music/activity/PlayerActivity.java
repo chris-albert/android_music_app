@@ -1,4 +1,4 @@
-package com.creasetoph.music;
+package com.creasetoph.music.activity;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import com.creasetoph.music.util.Logger;
+import com.creasetoph.music.controller.PlayerController;
+import com.creasetoph.music.R;
 
 public class PlayerActivity extends Activity {
     
@@ -48,12 +51,12 @@ public class PlayerActivity extends Activity {
             Method method = getClass().getDeclaredMethod(buttonMap.get(view.getId()),params);
             method.invoke(this,view);
         }catch(Exception e) {
-            Logger.log(e.getMessage());
+            Logger.info(e.getMessage());
         }
     }
     
     private void onPlayPauseClick(View view) {
-        Logger.log("onPlayPause");
+        Logger.info("onPlayPause");
         _controller.playPause();
         setPlayPause();
     }
@@ -68,18 +71,18 @@ public class PlayerActivity extends Activity {
     }
     
     private void onStopClick(View view) {
-        Logger.log("onStop");
+        Logger.info("onStop");
         _controller.stop();
         setPlayPause();
     }
     
     private void onPrevClick(View view) {
-        Logger.log("onPrev");
+        Logger.info("onPrev");
         _controller.prev();
     }
     
     private void onNextClick(View view) {
-        Logger.log("onNext");
+        Logger.info("onNext");
         _controller.next();
     }
 }

@@ -4,4 +4,6 @@
           android:title="@string/playlist" />
     <item android:id="@+id/view_player"
           android:title="@string/player" />
+    <item android:id="@+id/view_preferences"
+          android:title="@string/preferences" />
 </menu>

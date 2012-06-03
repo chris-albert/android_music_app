@@ -1,17 +1,16 @@
 package com.creasetoph.music.model;
 
-import java.util.Collections;
 import java.util.Iterator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.creasetoph.music.HttpUtil;
-import com.creasetoph.music.Logger;
-import com.creasetoph.music.objects.Album;
-import com.creasetoph.music.objects.Artist;
-import com.creasetoph.music.objects.Library;
-import com.creasetoph.music.objects.Track;
+import com.creasetoph.music.util.HttpUtil;
+import com.creasetoph.music.util.Logger;
+import com.creasetoph.music.object.Album;
+import com.creasetoph.music.object.Artist;
+import com.creasetoph.music.object.Library;
+import com.creasetoph.music.object.Track;
 
 public class NetworkMusicModel extends MusicModel {
 	
@@ -64,7 +63,7 @@ public class NetworkMusicModel extends MusicModel {
 		if(json != null) {
 			parseJson(json);
 		}else {
-			Logger.log("Error fetching json");
+			Logger.info("Error fetching json");
 		}
 	}
 	

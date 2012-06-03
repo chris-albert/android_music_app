@@ -1,2 +1,51 @@
 This is my project for listening to music on my android over the network or locally.
 
+Activities:
+An activity is like a screen, you can only view one activity at a time.
+Moving from screen to screen is also moving from activity to activity.
+Activities in this project:
+    Creasetoph_musicActivity
+        Main activity (What is displayed when app starts)
+    LibraryActivity
+        Shows all artist and albums to choose
+    PlayerActivity
+        Shows the player buttons (Play,Pause,Next,Prev)
+    PlaylistActivity
+        Shows the current playlist
+    PreferencesActivity
+        View of edit preferences
+
+Adapters:
+Defines how an object is drawn
+Adapters in this project:
+    LibraryAdapter
+        Defines how a LibraryItem is drawn
+    PlaylistAdapter
+        Defines how a PlaylistItem is drawn
+
+Controllers:
+High level operations available on that object.
+Mostly associated with a activity, the activity will call methods on the controller
+and the controller will do the grunt work.
+Controller in this project:
+    LibraryController
+        Deals directly with LibraryItems
+    PlayerController
+        Mostly deals with the playlist controller
+    PlaylistController
+        Deals with the manipulating the Playlist and sound object
+
+Objects:
+Helper objects representing complex data types
+Objects in this project:
+    Library
+        Is like a library of artist
+        A library has a list of artist
+    Artist
+        Represents an artist
+        Has a list of albums
+    Album
+        Represents an album
+        Has a list of tracks
+    Track
+        Represents a track

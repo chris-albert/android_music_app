@@ -1,10 +1,11 @@
-package com.creasetoph.music;
+package com.creasetoph.music.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import com.creasetoph.music.util.Logger;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -17,7 +18,7 @@ import android.net.Uri;
 public class HttpUtil {
 
     public static String httpGet(String url) {
-        Logger.log("Trying to get: " + url);
+        Logger.info("Trying to get: " + url);
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
         
@@ -44,7 +45,7 @@ public class HttpUtil {
                 total.append(line); 
             }
         } catch (IOException e) {
-            Logger.log("IOException in inputStreamToString: " + e.getMessage());
+            Logger.info("IOException in inputStreamToString: " + e.getMessage());
         }
         
         // Return full string

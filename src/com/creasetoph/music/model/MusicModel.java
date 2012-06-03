@@ -1,6 +1,6 @@
 package com.creasetoph.music.model;
 
-import com.creasetoph.music.objects.Library;
+import com.creasetoph.music.object.Library;
 
 public abstract class MusicModel {
 

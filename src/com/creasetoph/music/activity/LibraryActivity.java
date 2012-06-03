@@ -1,4 +1,4 @@
-package com.creasetoph.music;
+package com.creasetoph.music.activity;
 
 import java.util.ArrayList;
 
@@ -13,13 +13,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import com.creasetoph.music.*;
+import com.creasetoph.music.activity.PreferencesActivity;
+import com.creasetoph.music.adapter.LibraryAdapter;
+import com.creasetoph.music.controller.LibraryController;
+import com.creasetoph.music.util.Logger;
 
 public class LibraryActivity extends Activity {
     
     private static final int ALBUM_ITEM = R.layout.album_item;
     
     private ListView          _listView;
-    private LibraryAdapter    _adapter;
+    private LibraryAdapter _adapter;
     private LibraryController _controller;
     
 	public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,9 @@ public class LibraryActivity extends Activity {
             case R.id.view_player:
                 showPlayer();
                 return true;
+            case R.id.view_preferences:
+                showPreferences();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -51,8 +59,8 @@ public class LibraryActivity extends Activity {
         if(view.getId() == R.id.artist_item) {
             TextView tv = (TextView) view.findViewById(R.id.artist_name);
             String selection = tv.getText().toString();
-            Logger.log("Size: " + _controller.getLibrarySize());
-            Logger.log("Position: " + position);
+            Logger.info("Size: " + _controller.getLibrarySize());
+            Logger.info("Position: " + position);
             if(_controller.getLibrarySize() > position + 1 && _controller.getLibrary().get(position + 1).getType() == "album") {
                 _controller.removeAlbums(selection,position);
             }else {
@@ -73,6 +81,11 @@ public class LibraryActivity extends Activity {
     
     public void showPlayer() {
         Intent intent = new Intent(this,PlayerActivity.class);
+        startActivity(intent);
+    }
+
+    public void showPreferences() {
+        Intent intent = new Intent(this, PreferencesActivity.class);
         startActivity(intent);
     }
     

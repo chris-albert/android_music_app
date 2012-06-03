@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="External Resources">
+        <EditTextPreference
+                android:name="JSON Resource url"
+                android:summary="Url for fetching library JSON data"
+                android:defaultValue="http://music.creasetoph.com:1338/music/json"
+                android:title="JSON Url"
+                android:key="json_url" />
+        <EditTextPreference
+                android:name="Stream Resource url"
+                android:summary="Url for streaming media"
+                android:defaultValue="http://music.creasetoph.com:1338/music/stream"
+                android:title="Stream Url"
+                android:key="stream_url" />
+        </PreferenceCategory>
+</PreferenceScreen>

@@ -1,21 +1,22 @@
-package com.creasetoph.music;
+package com.creasetoph.music.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
+import com.creasetoph.music.LibraryItem;
+import com.creasetoph.music.util.Logger;
 import com.creasetoph.music.model.MusicModel;
 import com.creasetoph.music.model.MusicModelManager;
-import com.creasetoph.music.objects.Album;
-import com.creasetoph.music.objects.Artist;
-import com.creasetoph.music.objects.Library;
-import com.creasetoph.music.objects.Track;
+import com.creasetoph.music.object.Album;
+import com.creasetoph.music.object.Artist;
+import com.creasetoph.music.object.Track;
 
 public class LibraryController {
 	
 	private ArrayList<LibraryItem> _libraryList = new ArrayList<LibraryItem>();
 	private MusicModel _model = null;
-	//private MediaData _mediaData;
-	
+
 	private static LibraryController _instance = null;
 	
 	public static final String ARTIST = "artist";
@@ -66,11 +67,16 @@ public class LibraryController {
 			}
 		}
 		PlaylistController pc = PlaylistController.getInstance();
-		Logger.log("Artist: " + artist + " Selection: " + selection);
-		for(Track track: _model.getLibrary().getTrackList(artist, selection)) {
-			pc.addToPlaylist(artist,selection,track.getName());
-		}
-		pc.playPause();
+		Logger.info("Artist: " + artist + " Selection: " + selection);
+        try {
+            List<Track> tracks = _model.getLibrary().getArtist(artist).getAlbum(selection).getTracks();
+            for(Track track: tracks) {
+                pc.addToPlaylist(artist,selection,track.getName());
+            }
+            pc.playPause();
+        }catch(NullPointerException npe) {
+            Logger.log(npe);
+        }
 	}
 	
 	public void removeAlbums(String artist,int index) {
@@ -85,11 +91,15 @@ public class LibraryController {
 	}
 	
 	public void addAlbums(String artist,int index) {
-		Logger.log("Artist selected: " + artist);
+		Logger.info("Artist selected: " + artist);
 		ArrayList<LibraryItem> albums = new ArrayList<LibraryItem>();
-		for(Album album: _model.getLibrary().getAlbumList(artist)) {
-			albums.add(new LibraryItem(ALBUM,album.getName()));
-		}
-		_libraryList.addAll(index + 1,albums);
+        try {
+            for(Album album: _model.getLibrary().getArtist(artist).getAlbums()) {
+                albums.add(new LibraryItem(ALBUM,album.getName()));
+            }
+            _libraryList.addAll(index + 1,albums);
+        }catch(NullPointerException npe) {
+            Logger.log(npe);
+        }
 	}
 }

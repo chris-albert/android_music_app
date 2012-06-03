@@ -1,5 +1,6 @@
-package com.creasetoph.music;
+package com.creasetoph.music.activity;
 
+import com.creasetoph.music.activity.LibraryActivity;
 import com.creasetoph.music.model.MusicModelManager;
 
 import android.app.Activity;

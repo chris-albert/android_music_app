@@ -1,5 +1,7 @@
 package com.creasetoph.music;
 
+import com.creasetoph.music.util.HttpUtil;
+
 public class PlaylistTrack {
 
 	private String _artist;
