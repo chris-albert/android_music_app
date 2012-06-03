@@ -1,9 +1,9 @@
 package com.creasetoph.music;
 
-public class PlaylistItem implements Comparable<PlaylistItem>{
-    
+public class PlaylistItem implements Comparable<PlaylistItem> {
+
     private String _track;
-    
+
     public PlaylistItem(String track) {
         setTrack(track);
     }

@@ -21,7 +21,7 @@ public class HttpUtil {
         Logger.info("Trying to get: " + url);
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
-        
+
         try {
             HttpResponse response = httpClient.execute(httpGet);
             InputStream content = response.getEntity().getContent();
@@ -31,27 +31,27 @@ public class HttpUtil {
         }
         return null;
     }
-    
+
     private static String inputStreamToString(InputStream is) {
         String line = "";
         StringBuilder total = new StringBuilder();
-        
+
         // Wrap a BufferedReader around the InputStream
         BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 
         // Read response until the end
         try {
-            while ((line = rd.readLine()) != null) { 
-                total.append(line); 
+            while ((line = rd.readLine()) != null) {
+                total.append(line);
             }
         } catch (IOException e) {
             Logger.info("IOException in inputStreamToString: " + e.getMessage());
         }
-        
+
         // Return full string
         return total.toString();
     }
-    
+
     public static void streamMedia(String url) {
         MediaPlayer mediaPlayer = new MediaPlayer();
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -63,7 +63,7 @@ public class HttpUtil {
         }
         mediaPlayer.start();
     }
-    
+
     public static String encode(String str) {
         return Uri.encode(str);
     }

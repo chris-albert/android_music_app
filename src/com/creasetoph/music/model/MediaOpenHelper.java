@@ -6,10 +6,10 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class MediaOpenHelper extends SQLiteOpenHelper {
-	
-	private static final int DATABASE_VERSION = 1;
-	
-	private static final String DATABASE_NAME = "creasetoph_media";
+
+    private static final int DATABASE_VERSION = 1;
+
+    private static final String DATABASE_NAME = "creasetoph_media";
     private static final String MEDIA_TABLE_NAME = "media";
     /*
     private static final String MEDIA_TABLE_CREATE =
@@ -18,16 +18,16 @@ public class MediaOpenHelper extends SQLiteOpenHelper {
                 KEY_DEFINITION + " TEXT);";
     */
 
-	public MediaOpenHelper(Context context) {
-		super(context, DATABASE_NAME,null,DATABASE_VERSION);
-	}
+    public MediaOpenHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
 
-	public void onCreate(SQLiteDatabase db) {
-		
-	}
+    public void onCreate(SQLiteDatabase db) {
 
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		
-	}
+    }
+
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
 
 }

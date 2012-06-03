@@ -13,29 +13,29 @@ import com.creasetoph.music.PlaylistItem;
 import com.creasetoph.music.R;
 
 public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
-    
+
     private ArrayList<PlaylistItem> _items;
     private Context _context;
     private PlaylistController _playlist;
-    
-    public PlaylistAdapter(Context context,int textViewResourceId,ArrayList<PlaylistItem> items) {
-        super(context,textViewResourceId,items);
+
+    public PlaylistAdapter(Context context, int textViewResourceId, ArrayList<PlaylistItem> items) {
+        super(context, textViewResourceId, items);
         _context = context;
         _items = items;
         _playlist = PlaylistController.getInstance();
     }
-    
-    public View getView(int position,View convertView,ViewGroup parent) {
+
+    public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         PlaylistItem item = _items.get(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        v = li.inflate(R.layout.playlist_item,null);
+        v = li.inflate(R.layout.playlist_item, null);
         TextView tv = (TextView) v.findViewById(R.id.track_name);
-        if(tv != null) {
+        if (tv != null) {
             tv.setText(item.getTrack());
         }
         //set current track number
-        if(_playlist.getCurrentTrack() == position) {
+        if (_playlist.getCurrentTrack() == position) {
             v.setBackgroundColor(0xAA000088);
         }
         return v;
