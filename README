@@ -21,6 +21,7 @@ Activities in this project:
  * Adapters *
  ************/
 Defines how an object is drawn
+Holds arrays of items to render as lists
 Adapters in this project:
     LibraryAdapter
         Defines how a LibraryItem is drawn
@@ -41,6 +42,31 @@ Controller in this project:
     PlaylistController
         Deals with the manipulating the Playlist and sound object
 
+/*********
+ * Items *
+ *********/
+An item is used by adapters to display contents in a list layout
+Adapters have arrays of list which tell the adapter what to display in the list
+Items in this project:
+    LibraryItem
+        Holds items that can be in the library adapter
+    PlaylistItem
+        Holds items that can be in the playlist adapter
+
+/**********
+ * Models *
+ **********/
+Models are the ministers of data, they deal with how the data is fetched
+Models in the project:
+    LocalMusicModel
+        Deals with gathering local music data
+    MusicModel
+        Base class for other models dealing with music
+    MusicModelManager
+        Deals with holding the current music model, and know which one to create
+    NetworkMusicModel
+        Deals with gathering network music data
+
 /***********
  * Objects *
  ***********/
@@ -57,3 +83,13 @@ Objects in this project:
         Has a list of tracks
     Track
         Represents a track
+    MusicItem
+        Holds data for a music item (Artist,Album,Track all extend from this)
+    Playlist
+        Holds playlist tracks and handles playlist level operations
+    PlaylistTrack
+        Holds data for a playlist track(Names of artist,album,track)
+        Also know how to format playlist track for http retrieval
+    Sound
+        Deals with playing sounds
+

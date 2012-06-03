@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import com.creasetoph.music.object.Playlist;
-import com.creasetoph.music.PlaylistItem;
-import com.creasetoph.music.PlaylistTrack;
+import com.creasetoph.music.item.PlaylistItem;
+import com.creasetoph.music.object.PlaylistTrack;
 import com.creasetoph.music.object.Sound;
 
 public class PlaylistController {

@@ -8,22 +8,40 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import com.creasetoph.music.LibraryItem;
+import com.creasetoph.music.item.LibraryItem;
 import com.creasetoph.music.R;
 
+/**
+ * Tells android how to draw the library list
+ */
 public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
 
+    //List of LibraryItem's to show
     private ArrayList<LibraryItem> _items;
+    //Context of application
     private Context _context;
 
+    /**
+     * Constructor sets up Adapter
+     * @param context The current context.
+     * @param textViewResourceId The resource ID for a layout file containing a
+     *                           TextView to use when instantiating views.
+     * @param items Items to show in list view
+     */
     public LibraryAdapter(Context context, int textViewResourceId, ArrayList<LibraryItem> items) {
         super(context, textViewResourceId, items);
         _context = context;
         _items = items;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+    /**
+     * Gets the view for each item in adapter
+     * @param position Position in items lise
+     * @param v The current view
+     * @param parent The parent of the view
+     * @return Updated view with item added to it
+     */
+    public View getView(int position, View v, ViewGroup parent) {
         LibraryItem item = _items.get(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (item.typeEquals(LibraryItem.Type.Artist)) {

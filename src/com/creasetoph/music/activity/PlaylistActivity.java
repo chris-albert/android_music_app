@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.creasetoph.music.*;
 import com.creasetoph.music.adapter.PlaylistAdapter;
 import com.creasetoph.music.controller.PlaylistController;
+import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.util.Logger;
 
 public class PlaylistActivity extends Activity {

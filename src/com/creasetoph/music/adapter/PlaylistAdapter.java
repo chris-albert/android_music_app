@@ -9,15 +9,28 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.creasetoph.music.controller.PlaylistController;
-import com.creasetoph.music.PlaylistItem;
+import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.R;
 
+/**
+ * Tells android how to draw the playlist list
+ */
 public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
 
+    //List of PlaylistItem's to show
     private ArrayList<PlaylistItem> _items;
+    //Current context
     private Context _context;
+    //Playlist controller
     private PlaylistController _playlist;
 
+    /**
+     * Constructor sets up Adapter
+     * @param context The current context.
+     * @param textViewResourceId The resource ID for a layout file containing a
+     *                           TextView to use when instantiating views.
+     * @param items Items to show in list view
+     */
     public PlaylistAdapter(Context context, int textViewResourceId, ArrayList<PlaylistItem> items) {
         super(context, textViewResourceId, items);
         _context = context;
@@ -25,8 +38,14 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
         _playlist = PlaylistController.getInstance();
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+    /**
+     * Gets the view for each item in adapter
+     * @param position Position in items lise
+     * @param v The current view
+     * @param parent The parent of the view
+     * @return Updated view with item added to it
+     */
+    public View getView(int position, View v, ViewGroup parent) {
         PlaylistItem item = _items.get(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = li.inflate(R.layout.playlist_item, null);

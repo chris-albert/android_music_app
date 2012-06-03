@@ -1,4 +1,4 @@
-package com.creasetoph.music;
+package com.creasetoph.music.object;
 
 import com.creasetoph.music.util.HttpUtil;
 
@@ -9,12 +9,6 @@ public class PlaylistTrack {
     private String _track;
 
     public static final String SEPARATOR = "/";
-
-    public PlaylistTrack() {
-        _artist = "";
-        _album = "";
-        _track = "";
-    }
 
     public PlaylistTrack(String artist, String album, String track) {
         _artist = artist;

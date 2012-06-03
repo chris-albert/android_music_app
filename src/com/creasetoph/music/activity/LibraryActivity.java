@@ -14,9 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import com.creasetoph.music.*;
-import com.creasetoph.music.activity.PreferencesActivity;
 import com.creasetoph.music.adapter.LibraryAdapter;
 import com.creasetoph.music.controller.LibraryController;
+import com.creasetoph.music.item.LibraryItem;
 import com.creasetoph.music.util.Logger;
 
 public class LibraryActivity extends Activity {

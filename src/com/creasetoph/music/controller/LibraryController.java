@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.creasetoph.music.LibraryItem;
+import com.creasetoph.music.item.LibraryItem;
 import com.creasetoph.music.model.MusicModelManager;
 import com.creasetoph.music.util.Logger;
 import com.creasetoph.music.model.MusicModel;
