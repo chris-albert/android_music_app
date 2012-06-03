@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import com.creasetoph.music.util.Logger;
 
 public class Creasetoph_musicActivity extends Activity {
 
@@ -20,12 +21,18 @@ public class Creasetoph_musicActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.info("On create");
         appContext = getApplicationContext();
         if(!mediaFetched) {
             askMediaLocation();
         }else {
             openLibrary();
         }
+    }
+
+    public void onStart() {
+        super.onStart();
+        Logger.info("On start");
     }
 
     private void onMediaFetch() {

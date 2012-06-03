@@ -69,7 +69,7 @@ public class LibraryController {
                 break;
             }
         }
-        Logger.info("Artist: " + artist + " Selection: " + selection);
+        Logger.info("Artist: " + artist + ", Selection: " + selection);
         try {
             List<Track> tracks = _model.getLibrary().getArtist(artist).getAlbum(selection).getTracks();
             for (Track track : tracks) {
