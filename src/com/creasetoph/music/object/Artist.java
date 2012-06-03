@@ -1,6 +1,7 @@
 package com.creasetoph.music.object;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Artist object has a name and holds albums
@@ -55,6 +56,13 @@ public class Artist {
      */
     public ArrayList<Album> getAlbums() {
         return _albums;
+    }
+
+    /**
+     * Sorts the albums for an artist in alphabetic order
+     */
+    public void sortAlbums() {
+        Collections.sort(_albums);
     }
 
     /**

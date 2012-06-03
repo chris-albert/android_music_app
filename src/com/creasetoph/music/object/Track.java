@@ -3,7 +3,7 @@ package com.creasetoph.music.object;
 /**
  * Track object has a track name
  */
-public class Track {
+public class Track implements Comparable<Track> {
 
     //Track name
     private String _name = "";
@@ -86,5 +86,16 @@ public class Track {
      */
     public String toString() {
         return getName();
+    }
+
+    /**
+     * Compares one track to another
+     * @param track Track to compare to
+     * @return 0 if the strings are equal,
+     * a negative integer if this string is before the specified string,
+     * or a positive integer if this string is after the specified string.
+     */
+    public int compareTo(Track track) {
+        return getName().compareTo(track.getName());
     }
 }

@@ -1,12 +1,24 @@
 package com.creasetoph.music.model;
 
+/**
+ * Manager for music models
+ */
 public class MusicModelManager {
 
-    public static final String LOCAL = "local";
-    public static final String NETWORK = "network";
+    /**
+     * MusicModelManager types
+     */
+    public enum Type {
+        Local,Network
+    }
 
+    //Music model currently in use
     private static MusicModel _model = null;
 
+    /**
+     * Gets the current model in use
+     * @return The current MusicModel
+     */
     public static MusicModel fetchModel() {
         if (_model != null) {
             return _model;
@@ -14,11 +26,17 @@ public class MusicModelManager {
         throw new RuntimeException("Cant fetch model before initializing it");
     }
 
-    public static void initializeModel(String type) {
-        if (type.equals(NETWORK)) {
-            _model = NetworkMusicModel.getInstance();
-        } else if (type.equals(LOCAL)) {
-            //model = new LocalMusicModel();
+    /**
+     * Initializes the music model for the given type
+     * @param type Type of music model to create
+     */
+    public static void initializeModel(Type type) {
+        switch(type) {
+            case Network:
+                _model = NetworkMusicModel.getInstance();
+                break;
+            case Local:
+                _model = LocalMusicModel.getInstance();
         }
     }
 }

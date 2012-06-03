@@ -70,6 +70,7 @@ public class LibraryActivity extends Activity {
         } else if (view.getId() == R.id.album_item) {
             TextView tv = (TextView) view.findViewById(R.id.album_name);
             String selection = tv.getText().toString();
+            _controller.clearPlaylist();
             _controller.addAlbumToPlaylist(selection, position);
         }
     }

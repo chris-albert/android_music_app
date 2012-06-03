@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import com.creasetoph.music.LibraryItem;
+import com.creasetoph.music.model.MusicModelManager;
 import com.creasetoph.music.util.Logger;
 import com.creasetoph.music.model.MusicModel;
-import com.creasetoph.music.model.MusicModelManager;
 import com.creasetoph.music.object.Album;
 import com.creasetoph.music.object.Artist;
 import com.creasetoph.music.object.Track;
@@ -16,6 +16,8 @@ public class LibraryController {
 
     private ArrayList<LibraryItem> _libraryList = new ArrayList<LibraryItem>();
     private MusicModel             _model       = null;
+    private PlaylistController _playlistController = null;
+
 
     private static LibraryController _instance = null;
 
@@ -32,6 +34,7 @@ public class LibraryController {
 
     private LibraryController() {
         _model = MusicModelManager.fetchModel();
+        _playlistController = PlaylistController.getInstance();
         setUpLibraryList();
     }
 
@@ -66,17 +69,20 @@ public class LibraryController {
                 break;
             }
         }
-        PlaylistController pc = PlaylistController.getInstance();
         Logger.info("Artist: " + artist + " Selection: " + selection);
         try {
             List<Track> tracks = _model.getLibrary().getArtist(artist).getAlbum(selection).getTracks();
             for (Track track : tracks) {
-                pc.addToPlaylist(artist, selection, track.getName());
+                _playlistController.addToPlaylist(artist, selection, track.getName());
             }
-            pc.playPause();
+            _playlistController.playPause();
         } catch (NullPointerException npe) {
             Logger.log(npe);
         }
+    }
+
+    public void clearPlaylist() {
+        _playlistController.clearPlaylist();
     }
 
     public void removeAlbums(String artist, int index) {

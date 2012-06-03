@@ -1,11 +1,13 @@
 package com.creasetoph.music.object;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Album object has name and holds tracks
  */
-public class Album {
+public class Album implements Comparable<Album> {
 
     //Tracks for this album
     private ArrayList<Track> _tracks = new ArrayList<Track>();
@@ -80,6 +82,13 @@ public class Album {
     }
 
     /**
+     * Sorts the tracks for the album in alphabetic order
+     */
+    public void sortTracks() {
+        Collections.sort(_tracks);
+    }
+
+    /**
      * Searches the list of tracks for a specified track
      *
      * @param trackName Track to find in albums' track list
@@ -101,5 +110,16 @@ public class Album {
      */
     public String toString() {
         return getName();
+    }
+
+    /**
+     * Compares one album to another
+     * @param album Album to compare to
+     * @return 0 if the strings are equal,
+     * a negative integer if this string is before the specified string,
+     * or a positive integer if this string is after the specified string.
+     */
+    public int compareTo(Album album) {
+        return getName().compareTo(album.getName());
     }
 }

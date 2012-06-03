@@ -14,12 +14,39 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
+/**
+ * Utils for working with http connections
+ */
 public class HttpUtil {
 
+    //Millisecond connect timeout
+    private static final int _connectTimeout = 10000;
+    //Millisecond socket timeout
+    private static final int _socketTimeout = 10000;
+
+    /**
+     * Gets an HttpClient with any http params set
+     * @return A pre-configured HttpClient
+     */
+    public static HttpClient getHttpClient() {
+        HttpParams httpParams = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(httpParams,_connectTimeout);
+        HttpConnectionParams.setSoTimeout(httpParams,_socketTimeout);
+        return new DefaultHttpClient(httpParams);
+    }
+
+    /**
+     * Gets data from the url provided
+     * @param url Url to get data from
+     * @return The body of the http response
+     */
     public static String httpGet(String url) {
         Logger.info("Trying to get: " + url);
-        HttpClient httpClient = new DefaultHttpClient();
+        HttpClient httpClient = getHttpClient();
         HttpGet httpGet = new HttpGet(url);
 
         try {
@@ -32,6 +59,11 @@ public class HttpUtil {
         return null;
     }
 
+    /**
+     * Converts an InputStream to a string
+     * @param is InputStream to convert to string
+     * @return String version of InputStream
+     */
     private static String inputStreamToString(InputStream is) {
         String line = "";
         StringBuilder total = new StringBuilder();
@@ -52,19 +84,12 @@ public class HttpUtil {
         return total.toString();
     }
 
-    public static void streamMedia(String url) {
-        MediaPlayer mediaPlayer = new MediaPlayer();
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        try {
-            mediaPlayer.setDataSource(url);
-            mediaPlayer.prepare();
-        } catch (Exception e) {
-            Logger.log(e);
-        }
-        mediaPlayer.start();
-    }
-
-    public static String encode(String str) {
-        return Uri.encode(str);
+    /**
+     * Encodes a string for use as an url in a http request
+     * @param url String to encode
+     * @return Encoded string
+     */
+    public static String encode(String url) {
+        return Uri.encode(url);
     }
 }

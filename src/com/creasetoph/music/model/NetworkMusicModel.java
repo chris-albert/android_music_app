@@ -2,6 +2,14 @@ package com.creasetoph.music.model;
 
 import java.util.Iterator;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.view.View;
+import com.creasetoph.music.activity.Creasetoph_musicActivity;
+import com.creasetoph.music.activity.LibraryActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,32 +22,7 @@ import com.creasetoph.music.object.Track;
 
 public class NetworkMusicModel extends MusicModel {
 
-    private static final String BASE_JSON_URL = "http://music.creasetoph.com:1338/music/json";
-
-    private static final String TEST_JSON = "" +
-            "{" +
-            "	artist1:{" +
-            "		album1:{" +
-            "			track1:'file'," +
-            "			track2:'file'" +
-            "		}," +
-            "		album2:{" +
-            "			track2:'file'," +
-            "			track3:'file'" +
-            "		}" +
-            "	}," +
-            "	artist2:{" +
-            "		album1:{" +
-            "			track1:'file'," +
-            "			track2:'file'" +
-            "		}," +
-            "		album2:{" +
-            "			track2:'file'," +
-            "			track3:'file'" +
-            "		}" +
-            "	}" +
-            "}";
-
+    private static String json_url = null;
     private static NetworkMusicModel _instance;
 
     private Library _library = null;
@@ -47,6 +30,8 @@ public class NetworkMusicModel extends MusicModel {
     private NetworkMusicModel() {
         super();
         _library = new Library();
+        json_url = PreferenceManager.getDefaultSharedPreferences(Creasetoph_musicActivity.appContext)
+                .getString("json_url","No json url found!");
         fetchJson();
     }
 
@@ -58,12 +43,11 @@ public class NetworkMusicModel extends MusicModel {
     }
 
     private void fetchJson() {
-        String json = HttpUtil.httpGet(BASE_JSON_URL);
-        //json = TEST_JSON;
-        if (json != null) {
+        try {
+            String json = HttpUtil.httpGet(json_url);
             parseJson(json);
-        } else {
-            Logger.info("Error fetching json");
+        }catch(Exception e) {
+            Logger.info("Error fetching json from url: " + json_url);
         }
     }
 
@@ -79,6 +63,9 @@ public class NetworkMusicModel extends MusicModel {
     private void parseJsonObject(JSONObject json) {
         for (Iterator<?> i = json.keys(); i.hasNext(); ) {
             String artist = i.next().toString();
+            if(artist.equals(".DS_Store")) {
+                continue;
+            }
             Artist artistObject = new Artist(artist);
             try {
                 JSONObject albumJsonObject = json.getJSONObject(artist);
@@ -92,13 +79,14 @@ public class NetworkMusicModel extends MusicModel {
                         Track trackObject = new Track(artist, album, track);
                         albumObject.addTrack(trackObject);
                     }
+                    albumObject.sortTracks();
                 }
             } catch (JSONException e) {
-                //map.put(key,"file");
+                Logger.error("Something funny happend parsing the json: " + e.getMessage());
             }
+            artistObject.sortAlbums();
             _library.addArtist(artistObject);
-        }
-        ;
+        };
     }
 
     public Library getLibrary() {

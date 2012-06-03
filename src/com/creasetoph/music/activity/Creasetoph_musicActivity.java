@@ -1,6 +1,6 @@
 package com.creasetoph.music.activity;
 
-import com.creasetoph.music.activity.LibraryActivity;
+import android.content.Context;
 import com.creasetoph.music.model.MusicModelManager;
 
 import android.app.Activity;
@@ -14,14 +14,26 @@ import android.os.Bundle;
 public class Creasetoph_musicActivity extends Activity {
 
     protected ProgressDialog _progressDialog;
+    private boolean mediaFetched = false;
+    public static Context appContext = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        askMediaLocation();
+        appContext = getApplicationContext();
+        if(!mediaFetched) {
+            askMediaLocation();
+        }else {
+            openLibrary();
+        }
     }
 
     private void onMediaFetch() {
+        mediaFetched = true;
+        openLibrary();
+    }
+
+    private void openLibrary() {
         Intent intent = new Intent(this, LibraryActivity.class);
         startActivity(intent);
     }
@@ -51,17 +63,17 @@ public class Creasetoph_musicActivity extends Activity {
 
     private void getMediaFromNetwork() {
         _progressDialog = ProgressDialog.show(this, "", "Loading from network, Please Wait...", true);
-        new GetMediaTask().execute(MusicModelManager.NETWORK);
+        new GetMediaTask().execute(MusicModelManager.Type.Network);
     }
 
     private void getMediaFromDisk() {
         _progressDialog = ProgressDialog.show(this, "", "Loading from disk, Please Wait...", true);
-        new GetMediaTask().execute(MusicModelManager.LOCAL);
+        new GetMediaTask().execute(MusicModelManager.Type.Local);
     }
 
-    private class GetMediaTask extends AsyncTask<String, Void, String> {
+    private class GetMediaTask extends AsyncTask<MusicModelManager.Type, Void, String> {
 
-        protected String doInBackground(String... params) {
+        protected String doInBackground(MusicModelManager.Type... params) {
             MusicModelManager.initializeModel(params[0]);
             return null;
         }
