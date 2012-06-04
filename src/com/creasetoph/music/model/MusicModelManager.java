@@ -9,7 +9,7 @@ public class MusicModelManager {
      * MusicModelManager types
      */
     public enum Type {
-        Local,Network
+        local,network
     }
 
     //Music model currently in use
@@ -32,10 +32,10 @@ public class MusicModelManager {
      */
     public static void initializeModel(Type type) {
         switch(type) {
-            case Network:
+            case network:
                 _model = NetworkMusicModel.getInstance();
                 break;
-            case Local:
+            case local:
                 _model = LocalMusicModel.getInstance();
         }
     }

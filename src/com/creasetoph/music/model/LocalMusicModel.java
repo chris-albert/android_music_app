@@ -2,12 +2,17 @@ package com.creasetoph.music.model;
 
 import java.io.File;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 
+import com.creasetoph.music.activity.Creasetoph_musicActivity;
 import com.creasetoph.music.object.Album;
 import com.creasetoph.music.object.Artist;
 import com.creasetoph.music.object.Library;
 import com.creasetoph.music.object.Track;
+import com.creasetoph.music.util.Logger;
 
 public class LocalMusicModel extends MusicModel {
 
@@ -35,6 +40,10 @@ public class LocalMusicModel extends MusicModel {
 
     private void parseDisk(String path) {
         File[] files = new File(path).listFiles();
+        if(files == null) {
+            Logger.error("Error finding path " + BASE_MEDIA_PATH);
+            return;
+        }
         for (File file : files) {
             if (file.isDirectory()) {
                 String artist = file.getName();
@@ -74,7 +83,6 @@ public class LocalMusicModel extends MusicModel {
 
     @Override
     public Library getLibrary() {
-        // TODO Auto-generated method stub
-        return null;
+        return _library;
     }
 }

@@ -11,11 +11,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import com.creasetoph.music.util.Logger;
+import com.creasetoph.music.util.Preferences;
 
 public class Creasetoph_musicActivity extends Activity {
 
     protected ProgressDialog _progressDialog;
-    private boolean mediaFetched = false;
+    private static boolean mediaFetched = false;
     public static Context appContext = null;
 
     @Override
@@ -24,7 +25,7 @@ public class Creasetoph_musicActivity extends Activity {
         Logger.info("On create");
         appContext = getApplicationContext();
         if(!mediaFetched) {
-            askMediaLocation();
+            setUpMediaLocation();
         }else {
             openLibrary();
         }
@@ -50,32 +51,11 @@ public class Creasetoph_musicActivity extends Activity {
         _progressDialog.dismiss();
     }
 
-    private void askMediaLocation() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Where would you like to get your media?")
-                .setCancelable(false)
-                .setPositiveButton("Local", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        getMediaFromDisk();
-                    }
-                })
-                .setNegativeButton("Network", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        getMediaFromNetwork();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
-    private void getMediaFromNetwork() {
-        _progressDialog = ProgressDialog.show(this, "", "Loading from network, Please Wait...", true);
-        new GetMediaTask().execute(MusicModelManager.Type.Network);
-    }
-
-    private void getMediaFromDisk() {
-        _progressDialog = ProgressDialog.show(this, "", "Loading from disk, Please Wait...", true);
-        new GetMediaTask().execute(MusicModelManager.Type.Local);
+    private void setUpMediaLocation() {
+        MusicModelManager.Type location;
+        location = MusicModelManager.Type.valueOf(Preferences.getString(Preferences.Name.media_location));
+        _progressDialog = ProgressDialog.show(this, "", "Loading from (" + location + "), Please Wait...", true);
+        new GetMediaTask().execute(location);
     }
 
     private class GetMediaTask extends AsyncTask<MusicModelManager.Type, Void, String> {

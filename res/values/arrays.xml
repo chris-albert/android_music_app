@@ -1,0 +1,10 @@
+<resources>
+    <string-array name="media_location">
+        <item name="network">Network</item>
+        <item name="local">Local</item>
+    </string-array>
+    <string-array name="media_location_values">
+        <item name="network">network</item>
+        <item name="local">local</item>
+    </string-array>
+</resources>

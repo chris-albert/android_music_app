@@ -8,11 +8,12 @@ import com.creasetoph.music.object.Playlist;
 import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.object.PlaylistTrack;
 import com.creasetoph.music.object.Sound;
+import com.creasetoph.music.util.Preferences;
 
 public class PlaylistController {
 
     private static PlaylistController _instance    = null;
-    private static String             _baseUrl     = "http://music.creasetoph.com:1338/music/stream";
+    private static String             _baseUrl     = null;
     private static boolean            repeat_album = true;
 
     private Playlist _playlist;
@@ -32,6 +33,7 @@ public class PlaylistController {
         _sound = new Sound();
         _playing = false;
         _paused = false;
+        _baseUrl = Preferences.getString(Preferences.Name.stream_url);
         registerSoundListeners();
     }
 

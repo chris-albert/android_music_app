@@ -2,8 +2,7 @@ package com.creasetoph.music.model;
 
 import java.util.Iterator;
 
-import android.preference.PreferenceManager;
-import com.creasetoph.music.activity.Creasetoph_musicActivity;
+import com.creasetoph.music.util.Preferences;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,8 +23,7 @@ public class NetworkMusicModel extends MusicModel {
     private NetworkMusicModel() {
         super();
         _library = new Library();
-        json_url = PreferenceManager.getDefaultSharedPreferences(Creasetoph_musicActivity.appContext)
-                .getString("json_url","No json url found!");
+        json_url = Preferences.getString(Preferences.Name.json_url);
         fetchJson();
     }
 
