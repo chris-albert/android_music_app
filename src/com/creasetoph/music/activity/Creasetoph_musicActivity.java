@@ -1,6 +1,8 @@
 package com.creasetoph.music.activity;
 
 import android.content.Context;
+import android.preference.PreferenceManager;
+import com.creasetoph.music.R;
 import com.creasetoph.music.model.MusicModelManager;
 
 import android.app.Activity;
@@ -16,28 +18,18 @@ import com.creasetoph.music.util.Preferences;
 public class Creasetoph_musicActivity extends Activity {
 
     protected ProgressDialog _progressDialog;
-    private static boolean mediaFetched = false;
     public static Context appContext = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences,false);
         Logger.info("On create");
         appContext = getApplicationContext();
-        if(!mediaFetched) {
-            setUpMediaLocation();
-        }else {
-            openLibrary();
-        }
-    }
-
-    public void onStart() {
-        super.onStart();
-        Logger.info("On start");
+        setUpMediaLocation();
     }
 
     private void onMediaFetch() {
-        mediaFetched = true;
         openLibrary();
     }
 
@@ -52,8 +44,13 @@ public class Creasetoph_musicActivity extends Activity {
     }
 
     private void setUpMediaLocation() {
-        MusicModelManager.Type location;
-        location = MusicModelManager.Type.valueOf(Preferences.getString(Preferences.Name.media_location));
+        MusicModelManager.Type location = null;
+        try {
+            location = MusicModelManager.Type.valueOf(Preferences.getString(Preferences.Name.media_location));
+        }catch(IllegalArgumentException iae) {
+            Logger.error(iae.getMessage());
+            location = MusicModelManager.Type.network;
+        }
         _progressDialog = ProgressDialog.show(this, "", "Loading from (" + location + "), Please Wait...", true);
         new GetMediaTask().execute(location);
     }

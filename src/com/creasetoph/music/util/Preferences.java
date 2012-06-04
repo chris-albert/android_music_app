@@ -14,6 +14,7 @@ public class Preferences {
     public enum Name {
         json_url,
         stream_url,
+        local_path,
         media_location
     }
 

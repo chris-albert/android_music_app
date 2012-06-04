@@ -2,21 +2,18 @@ package com.creasetoph.music.model;
 
 import java.io.File;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 
-import com.creasetoph.music.activity.Creasetoph_musicActivity;
 import com.creasetoph.music.object.Album;
 import com.creasetoph.music.object.Artist;
 import com.creasetoph.music.object.Library;
 import com.creasetoph.music.object.Track;
 import com.creasetoph.music.util.Logger;
+import com.creasetoph.music.util.Preferences;
 
 public class LocalMusicModel extends MusicModel {
 
-    private static final String BASE_MEDIA_PATH = "/sdcard/Music";
+    private static String _mediaPath = null;
     private static LocalMusicModel _instance = null;
 
     private Library _library = null;
@@ -24,6 +21,7 @@ public class LocalMusicModel extends MusicModel {
     private LocalMusicModel() {
         super();
         _library = new Library();
+        _mediaPath = Preferences.getString(Preferences.Name.local_path);
         fetchDiskData();
     }
 
@@ -35,13 +33,13 @@ public class LocalMusicModel extends MusicModel {
     }
 
     private void fetchDiskData() {
-        new ParseDiskTask().execute(BASE_MEDIA_PATH);
+        parseDisk(_mediaPath);
     }
 
     private void parseDisk(String path) {
         File[] files = new File(path).listFiles();
         if(files == null) {
-            Logger.error("Error finding path " + BASE_MEDIA_PATH);
+            Logger.error("Error finding path " + path);
             return;
         }
         for (File file : files) {
@@ -66,18 +64,6 @@ public class LocalMusicModel extends MusicModel {
                 }
                 _library.addArtist(artistObject);
             }
-        }
-    }
-
-    private class ParseDiskTask extends AsyncTask<String, Void, Void> {
-
-        protected Void doInBackground(String... params) {
-            parseDisk(params[0]);
-            return null;
-        }
-
-        protected void onPostExecute() {
-
         }
     }
 
