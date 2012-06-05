@@ -1,42 +1,85 @@
 package com.creasetoph.music.model;
 
-/**
- * Manager for music models
- */
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
+import com.creasetoph.music.util.Logger;
+
 public class MusicModelManager {
 
-    /**
-     * MusicModelManager types
-     */
-    public enum Type {
-        local,network
-    }
+    private static MusicModelManager _instance = null;
+    private MusicModel networkMusicModel;
+    private MusicModel localMusicModel;
+    private Handler.Callback networkCallback = null;
+    private Handler.Callback localCallback = null;
 
-    //Music model currently in use
-    private static MusicModel _model = null;
-
-    /**
-     * Gets the current model in use
-     * @return The current MusicModel
-     */
-    public static MusicModel fetchModel() {
-        if (_model != null) {
-            return _model;
+    public static MusicModelManager getInstance() {
+        if(_instance == null) {
+            _instance = new MusicModelManager();
         }
-        throw new RuntimeException("Cant fetch model before initializing it");
+        return _instance;
     }
 
-    /**
-     * Initializes the music model for the given type
-     * @param type Type of music model to create
-     */
-    public static void initializeModel(Type type) {
+    private MusicModelManager() {
+        fetchModels();
+    }
+
+    private void fetchModels() {
+        Logger.info("Fetching models");
+        new GetMediaTask().execute(MusicModelFactory.Type.network);
+        new GetMediaTask().execute(MusicModelFactory.Type.local);
+    }
+
+    public MusicModel getMusicModel(MusicModelFactory.Type type) {
         switch(type) {
             case network:
-                _model = NetworkMusicModel.getInstance();
+                return networkMusicModel;
+            case local:
+                return localMusicModel;
+        }
+        return null;
+    }
+
+    public void setMusicModel(MusicModelFactory.Type type,MusicModel musicModel) {
+        switch(type) {
+            case network:
+                networkMusicModel = musicModel;
+                if(networkCallback != null) {
+                    networkCallback.handleMessage(new Message());
+                }
                 break;
             case local:
-                _model = LocalMusicModel.getInstance();
+                localMusicModel = musicModel;
+                if(localCallback != null) {
+                    localCallback.handleMessage(new Message());
+                }
+                break;
+        }
+    }
+
+    public void setCallback(MusicModelFactory.Type type, Handler.Callback callback) {
+        switch(type) {
+            case network:
+                networkCallback = callback;
+                break;
+            case local:
+                localCallback = callback;
+                break;
+        }
+    }
+
+    private class GetMediaTask extends AsyncTask<MusicModelFactory.Type, Void, MusicModel> {
+
+        private MusicModelFactory.Type type;
+
+        protected MusicModel doInBackground(MusicModelFactory.Type... params) {
+            type = params[0];
+            return MusicModelFactory.getMusicModel(type);
+        }
+
+        protected void onPostExecute(MusicModel musicModel) {
+            Logger.info("Fetching model (" + type + ") finished");
+            setMusicModel(type, musicModel);
         }
     }
 }

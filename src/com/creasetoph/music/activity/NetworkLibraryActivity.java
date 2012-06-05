@@ -1,10 +1,10 @@
 package com.creasetoph.music.activity;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,47 +12,39 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-import com.creasetoph.music.*;
+import com.creasetoph.music.R;
 import com.creasetoph.music.adapter.LibraryAdapter;
 import com.creasetoph.music.controller.LibraryController;
 import com.creasetoph.music.item.LibraryItem;
+import com.creasetoph.music.model.MusicModelFactory;
+import com.creasetoph.music.model.MusicModelManager;
 import com.creasetoph.music.util.Logger;
 
-public class LibraryActivity extends Activity {
+import java.util.ArrayList;
+
+
+public class NetworkLibraryActivity extends Activity {
 
     private static final int ALBUM_ITEM = R.layout.album_item;
 
-    private ListView _listView;
-    private LibraryAdapter _adapter;
+    private ListView          _listView;
+    private LibraryAdapter    _adapter;
     private LibraryController _controller;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _controller = LibraryController.getInstance();
+        MusicModelManager.getInstance().setCallback(MusicModelFactory.Type.network,new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                modelFinished();
+                return true;
+            }
+        });
+    }
+
+    private void modelFinished() {
+        _controller = new LibraryController(MusicModelFactory.Type.network);
         createListView(_controller.getLibrary());
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.view_playlist:
-                showPlaylist();
-                return true;
-            case R.id.view_player:
-                showPlayer();
-                return true;
-            case R.id.view_preferences:
-                showPreferences();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void onListItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -62,7 +54,7 @@ public class LibraryActivity extends Activity {
             Logger.info("Size: " + _controller.getLibrarySize());
             Logger.info("Position: " + position);
             if (_controller.getLibrarySize() > position + 1 &&
-                _controller.getLibrary().get(position + 1).getType() == LibraryItem.Type.Album) {
+                    _controller.getLibrary().get(position + 1).getType() == LibraryItem.Type.Album) {
                 _controller.removeAlbums(selection, position);
             } else {
                 _controller.addAlbums(selection, position);
@@ -76,27 +68,12 @@ public class LibraryActivity extends Activity {
         }
     }
 
-    public void showPlaylist() {
-        Intent intent = new Intent(this, PlaylistActivity.class);
-        startActivity(intent);
-    }
-
-    public void showPlayer() {
-        Intent intent = new Intent(this, PlayerActivity.class);
-        startActivity(intent);
-    }
-
-    public void showPreferences() {
-        Intent intent = new Intent(this, PreferencesActivity.class);
-        startActivity(intent);
-    }
-
     public void createListView(ArrayList<LibraryItem> list) {
         _listView = new ListView(this);
         _listView.setTextFilterEnabled(true);
         _adapter = new LibraryAdapter(this, ALBUM_ITEM, list);
         _listView.setAdapter(_adapter);
-        _listView.setOnItemClickListener(new OnItemClickListener() {
+        _listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 onListItemClick(parent, view, position, id);
             }
@@ -108,4 +85,3 @@ public class LibraryActivity extends Activity {
         _adapter.notifyDataSetChanged();
     }
 }
-

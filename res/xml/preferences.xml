@@ -13,17 +13,13 @@
             android:summary="Url for streaming media"
             android:defaultValue="http://music.creasetoph.com:1338/music/stream"
             android:key="stream_url" />
+<PreferenceCategory
+        android:title="Local Resources">
     <EditTextPreference
             android:title="Local Path"
             android:summary="Path for local music"
             android:defaultValue="/sdcard/music"
             android:key="local_path" />
-    <ListPreference
-            android:title="Media Location"
-            android:summary="Location to fetch media"
-            android:defaultValue="network"
-            android:entries="@array/media_location"
-            android:entryValues="@array/media_location_values"
-            android:key="media_location" />
+    </PreferenceCategory>
 </PreferenceCategory>
 </PreferenceScreen>

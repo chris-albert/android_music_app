@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.creasetoph.music.item.LibraryItem;
+import com.creasetoph.music.model.MusicModelFactory;
 import com.creasetoph.music.model.MusicModelManager;
 import com.creasetoph.music.util.Logger;
 import com.creasetoph.music.model.MusicModel;
@@ -18,21 +19,8 @@ public class LibraryController {
     private MusicModel             _model              = null;
     private PlaylistController     _playlistController = null;
 
-    private static LibraryController _instance = null;
-
-    public static final String ARTIST = "artist";
-    public static final String ALBUM  = "album";
-    public static final String TRACK  = "track";
-
-    public static LibraryController getInstance() {
-        if (_instance == null) {
-            _instance = new LibraryController();
-        }
-        return _instance;
-    }
-
-    private LibraryController() {
-        _model = MusicModelManager.fetchModel();
+    public LibraryController(MusicModelFactory.Type type) {
+        _model = MusicModelManager.getInstance().getMusicModel(type);
         _playlistController = PlaylistController.getInstance();
         setUpLibraryList();
     }
