@@ -22,7 +22,7 @@ import com.creasetoph.music.util.Logger;
  */
 public class CallReceiver extends BroadcastReceiver {
 
-    /*
+    /**
      * This is so we know that we paused the playback
      */
     private static boolean paused = false;
