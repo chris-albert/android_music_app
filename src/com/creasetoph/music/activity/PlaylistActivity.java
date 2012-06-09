@@ -52,7 +52,7 @@ public class PlaylistActivity extends Activity {
         int currentTrack = _controller.getCurrentTrack();
         View v = _listView.getChildAt(currentTrack);
         if(v != null) {
-            v.set
+//            v.set
             v.setBackgroundColor(CURRENT_COLOR);
         }
     }
