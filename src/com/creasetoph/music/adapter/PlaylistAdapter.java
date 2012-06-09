@@ -54,9 +54,9 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
             tv.setText(item.getTrack());
         }
         //set current track number
-        if (_playlist.getCurrentTrack() == position) {
-            v.setBackgroundColor(0xAA000088);
-        }
+//        if (_playlist.getCurrentTrack() == position) {
+//            v.setBackgroundColor(0xAA000088);
+//        }
         return v;
     }
 }

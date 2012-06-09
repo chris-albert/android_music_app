@@ -8,6 +8,7 @@ import com.creasetoph.music.object.Playlist;
 import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.object.PlaylistTrack;
 import com.creasetoph.music.object.Sound;
+import com.creasetoph.music.util.Logger;
 import com.creasetoph.music.util.Preferences;
 
 public class PlaylistController {
@@ -46,6 +47,7 @@ public class PlaylistController {
     }
 
     public void addToPlaylist(String artist, String album, String track) {
+        Logger.info("Adding to playlist(" + artist + "," + album + "," + track + ")");
         _playlist.addToPlaylist(artist, album, track);
     }
 
