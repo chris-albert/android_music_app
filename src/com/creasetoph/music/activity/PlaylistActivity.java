@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
 import com.creasetoph.music.*;
 import com.creasetoph.music.adapter.PlaylistAdapter;
 import com.creasetoph.music.controller.PlaylistController;
@@ -25,6 +24,7 @@ public class PlaylistActivity extends Activity {
     private ListView _listView;
     private PlaylistAdapter _adapter;
     private PlaylistController _controller;
+    private int currentlySelected = -1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +48,35 @@ public class PlaylistActivity extends Activity {
         return _controller.getPlaylistItems();
     }
 
-    private void setActive() {
-        int currentTrack = _controller.getCurrentTrack();
-        View v = _listView.getChildAt(currentTrack);
+    public void setActive() {
+        setActive(_controller.getCurrentTrack());
+    }
+
+    public void setActive(int index) {
+        Logger.info("Setting active: " + index);
+        deactivateItem(currentlySelected);
+        activateItem(index);
+    }
+
+    private View getViewListItem(int itemIndex) {
+        return _listView.getChildAt(itemIndex);
+    }
+
+    private void setViewItemBackgroundColor(int itemIndex,int color) {
+        View v = getViewListItem(itemIndex);
         if(v != null) {
-//            v.set
-            v.setBackgroundColor(CURRENT_COLOR);
+            v.setBackgroundColor(color);
+        }
+    }
+
+    private void activateItem(int itemIndex) {
+        currentlySelected = itemIndex;
+        setViewItemBackgroundColor(itemIndex,CURRENT_COLOR);
+    }
+
+    private void deactivateItem(int itemIndex) {
+        if(itemIndex != -1) {
+            setViewItemBackgroundColor(itemIndex,0);
         }
     }
 
@@ -68,13 +91,12 @@ public class PlaylistActivity extends Activity {
             }
         });
         setContentView(_listView);
-        setActive();
     }
 
     private void onListItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Logger.info("Track clicked");
+        Logger.info("Playlist clicked: " + position);
+        setActive(position);
         _controller.selectTrack(position);
-        _adapter.notifyDataSetChanged();
     }
 }
 

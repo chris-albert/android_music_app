@@ -21,6 +21,13 @@ public class PlaylistController {
     private Sound    _sound;
     private Boolean  _playing;
     private Boolean  _paused;
+    private MediaPlayer.OnPreparedListener _onPreparedListener = new MediaPlayer.OnPreparedListener() {
+        public void onPrepared(MediaPlayer mediaPlayer) {
+            _sound.play();
+            _paused = false;
+            _playing = true;
+        }
+    };
 
     public static PlaylistController getInstance() {
         if (_instance == null) {
@@ -31,7 +38,7 @@ public class PlaylistController {
 
     private PlaylistController() {
         _playlist = new Playlist();
-        _sound = new Sound();
+        _sound = new Sound(_onPreparedListener);
         _playing = false;
         _paused = false;
         _baseUrl = Preferences.getString(Preferences.Name.stream_url);
@@ -72,9 +79,6 @@ public class PlaylistController {
             String path = _playlist.getCurrentPlaylistTrackPath();
             if (path != null) {
                 _sound.load(_baseUrl + path);
-                _sound.play();
-                _paused = false;
-                _playing = true;
             }
         }
     }

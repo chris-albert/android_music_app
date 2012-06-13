@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import com.creasetoph.music.util.Logger;
 
+import java.io.IOException;
+
 /**
  * Wrapper for the android media player
  */
@@ -15,13 +17,15 @@ public class Sound {
     //The audio stream type for the media player
     private int _streamType = AudioManager.STREAM_MUSIC;
 
+
     /**
      * Constructor for sound object
      * Initializes and sets up MediaPlayer
      */
-    public Sound() {
+    public Sound(MediaPlayer.OnPreparedListener onPreparedListener) {
         _mediaPlayer = new MediaPlayer();
         _mediaPlayer.setAudioStreamType(_streamType);
+        _mediaPlayer.setOnPreparedListener(onPreparedListener);
     }
 
     /**
@@ -38,12 +42,12 @@ public class Sound {
      * @param url Url to stream media from
      */
     public void load(String url) {
+        _mediaPlayer.reset();
         try {
-            _mediaPlayer.reset();
             _mediaPlayer.setDataSource(url);
-            _mediaPlayer.prepare();
-        } catch (Exception e) {
-            Logger.log(e);
+            _mediaPlayer.prepareAsync();
+        } catch (IOException e) {
+            Logger.error("IOException: " + e.getMessage());
         }
     }
 

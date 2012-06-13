@@ -2,12 +2,14 @@ package com.creasetoph.music.adapter;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import com.creasetoph.music.activity.PlaylistActivity;
 import com.creasetoph.music.controller.PlaylistController;
 import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.R;
@@ -20,7 +22,7 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
     //List of PlaylistItem's to show
     private ArrayList<PlaylistItem> _items;
     //Current context
-    private Context _context;
+    private PlaylistActivity _context;
     //Playlist controller
     private PlaylistController _playlist;
 
@@ -31,7 +33,7 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
      *                           TextView to use when instantiating views.
      * @param items Items to show in list view
      */
-    public PlaylistAdapter(Context context, int textViewResourceId, ArrayList<PlaylistItem> items) {
+    public PlaylistAdapter(PlaylistActivity context, int textViewResourceId, ArrayList<PlaylistItem> items) {
         super(context, textViewResourceId, items);
         _context = context;
         _items = items;
@@ -53,10 +55,6 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
         if (tv != null) {
             tv.setText(item.getTrack());
         }
-        //set current track number
-//        if (_playlist.getCurrentTrack() == position) {
-//            v.setBackgroundColor(0xAA000088);
-//        }
         return v;
     }
 }
