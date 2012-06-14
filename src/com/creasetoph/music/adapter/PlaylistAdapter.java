@@ -1,6 +1,7 @@
 package com.creasetoph.music.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,18 +14,17 @@ import com.creasetoph.music.activity.PlaylistActivity;
 import com.creasetoph.music.controller.PlaylistController;
 import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.R;
+import com.creasetoph.music.util.Logger;
 
 /**
  * Tells android how to draw the playlist list
  */
 public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
 
-    //List of PlaylistItem's to show
-    private ArrayList<PlaylistItem> _items;
     //Current context
     private PlaylistActivity _context;
-    //Playlist controller
-    private PlaylistController _playlist;
+    //Color of current playlist track
+    public static final int CURRENT_COLOR = 0xAA000088; //Dark Blue
 
     /**
      * Constructor sets up Adapter
@@ -33,11 +33,17 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
      *                           TextView to use when instantiating views.
      * @param items Items to show in list view
      */
-    public PlaylistAdapter(PlaylistActivity context, int textViewResourceId, ArrayList<PlaylistItem> items) {
+    public PlaylistAdapter(PlaylistActivity context, int textViewResourceId, List<PlaylistItem> items) {
         super(context, textViewResourceId, items);
         _context = context;
-        _items = items;
-        _playlist = PlaylistController.getInstance();
+    }
+
+    public void setItems(List<PlaylistItem> items) {
+        clear();
+        for (PlaylistItem item : items) {
+            add(item);
+        }
+        notifyDataSetChanged();
     }
 
     /**
@@ -48,13 +54,18 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
      * @return Updated view with item added to it
      */
     public View getView(int position, View v, ViewGroup parent) {
-        PlaylistItem item = _items.get(position);
+        Logger.info("PlaylistAdapter position: " + position);
+        PlaylistItem item = getItem(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = li.inflate(R.layout.playlist_item, null);
         TextView tv = (TextView) v.findViewById(R.id.track_name);
         if (tv != null) {
             tv.setText(item.getTrack());
         }
+        if(_context.isActive(position)) {
+            v.setBackgroundColor(CURRENT_COLOR);
+        }
         return v;
     }
+
 }

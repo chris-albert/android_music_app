@@ -33,6 +33,7 @@ public class NetworkLibraryActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Logger.debug("NetworkLibraryActivity onCreate");
         MusicModelManager.getInstance().setCallback(MusicModelFactory.Type.network,new Handler.Callback() {
             @Override
             public boolean handleMessage(Message message) {
@@ -47,6 +48,12 @@ public class NetworkLibraryActivity extends Activity {
         createListView(_controller.getLibrary());
     }
 
+    public void onResume() {
+        Logger.debug("NetworkLibraryActivity onResume");
+        super.onResume();
+//        updateListView();
+    }
+
     private void onListItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (view.getId() == R.id.artist_item) {
             TextView tv = (TextView) view.findViewById(R.id.artist_name);
@@ -59,7 +66,7 @@ public class NetworkLibraryActivity extends Activity {
             } else {
                 _controller.addAlbums(selection, position);
             }
-            updateListView();
+            _adapter.notifyDataSetChanged();
         } else if (view.getId() == R.id.album_item) {
             TextView tv = (TextView) view.findViewById(R.id.album_name);
             String selection = tv.getText().toString();
@@ -82,6 +89,6 @@ public class NetworkLibraryActivity extends Activity {
     }
 
     public void updateListView() {
-        _adapter.notifyDataSetChanged();
+        _adapter.setItems(_controller.getLibrary());
     }
 }

@@ -12,6 +12,8 @@ public class MusicModelManager {
     private MusicModel localMusicModel;
     private Handler.Callback networkCallback = null;
     private Handler.Callback localCallback = null;
+    private boolean networkModelDone = false;
+    private boolean localModelDone = false;
 
     public static MusicModelManager getInstance() {
         if(_instance == null) {
@@ -44,12 +46,14 @@ public class MusicModelManager {
         switch(type) {
             case network:
                 networkMusicModel = musicModel;
+                networkModelDone = true;
                 if(networkCallback != null) {
                     networkCallback.handleMessage(new Message());
                 }
                 break;
             case local:
                 localMusicModel = musicModel;
+                localModelDone = true;
                 if(localCallback != null) {
                     localCallback.handleMessage(new Message());
                 }
@@ -61,9 +65,15 @@ public class MusicModelManager {
         switch(type) {
             case network:
                 networkCallback = callback;
+                if(networkModelDone && networkCallback != null) {
+                    networkCallback.handleMessage(new Message());
+                }
                 break;
             case local:
                 localCallback = callback;
+                if(localModelDone && localCallback != null) {
+                    localCallback.handleMessage(new Message());
+                }
                 break;
         }
     }

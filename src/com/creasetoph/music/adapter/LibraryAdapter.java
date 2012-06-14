@@ -1,6 +1,7 @@
 package com.creasetoph.music.adapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,14 +11,13 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.creasetoph.music.item.LibraryItem;
 import com.creasetoph.music.R;
+import com.creasetoph.music.item.PlaylistItem;
 
 /**
  * Tells android how to draw the library list
  */
 public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
 
-    //List of LibraryItem's to show
-    private ArrayList<LibraryItem> _items;
     //Context of application
     private Context _context;
 
@@ -31,7 +31,14 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
     public LibraryAdapter(Context context, int textViewResourceId, ArrayList<LibraryItem> items) {
         super(context, textViewResourceId, items);
         _context = context;
-        _items = items;
+    }
+
+    public void setItems(List<LibraryItem> items) {
+        clear();
+        for (LibraryItem item : items) {
+            add(item);
+        }
+        notifyDataSetChanged();
     }
 
     /**
@@ -42,7 +49,7 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
      * @return Updated view with item added to it
      */
     public View getView(int position, View v, ViewGroup parent) {
-        LibraryItem item = _items.get(position);
+        LibraryItem item = getItem(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (item.typeEquals(LibraryItem.Type.Artist)) {
             v = li.inflate(R.layout.artist_item, null);

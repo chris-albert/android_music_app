@@ -12,7 +12,6 @@ import com.creasetoph.music.R;
 import com.creasetoph.music.model.MusicModelManager;
 import com.creasetoph.music.object.Library;
 
-
 public class MainTabActivity extends TabActivity {
 
     private MusicModelManager musicModelManager;
