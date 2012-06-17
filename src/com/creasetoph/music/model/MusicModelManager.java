@@ -28,8 +28,28 @@ public class MusicModelManager {
 
     private void fetchModels() {
         Logger.info("Fetching models");
-        new GetMediaTask().execute(MusicModelFactory.Type.network);
-        new GetMediaTask().execute(MusicModelFactory.Type.local);
+        fetchModel(MusicModelFactory.Type.network);
+        fetchModel(MusicModelFactory.Type.local);
+    }
+
+    private void fetchModel(MusicModelFactory.Type type) {
+        new GetMediaTask().execute(type);
+    }
+
+    public void retryModelFetch(MusicModelFactory.Type type) {
+        setModelDone(type,false);
+        new GetMediaTask().execute(type);
+    }
+
+    private void setModelDone(MusicModelFactory.Type type,boolean done) {
+        switch(type) {
+            case network:
+                networkModelDone = done;
+                break;
+            case local:
+                localModelDone = done;
+                break;
+        }
     }
 
     public MusicModel getMusicModel(MusicModelFactory.Type type) {
@@ -43,17 +63,16 @@ public class MusicModelManager {
     }
 
     public void setMusicModel(MusicModelFactory.Type type,MusicModel musicModel) {
+        setModelDone(type,true);
         switch(type) {
             case network:
                 networkMusicModel = musicModel;
-                networkModelDone = true;
                 if(networkCallback != null) {
                     networkCallback.handleMessage(new Message());
                 }
                 break;
             case local:
                 localMusicModel = musicModel;
-                localModelDone = true;
                 if(localCallback != null) {
                     localCallback.handleMessage(new Message());
                 }

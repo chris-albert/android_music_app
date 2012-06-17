@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="json">Fetching music JSON…</string>
-    <string name="app_name">Creasetoph_music</string> 
+    <string name="app_name">Trebla</string>
     <string name="playlist">Playlist</string>
-	<string name="player">Player</string>
+    <string name="player">Player</string>
     <string name="preferences">Preferences</string>
-	<string name="play">Play</string>
-	<string name="pause">Pause</string>
-	<string name="stop">Stop</string>
-	<string name="next">Next &gt;</string>
-	<string name="prev">&lt; Prev</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="next">Next &gt;</string>
+    <string name="prev">&lt; Prev</string>
+    <string name="library_loading">Library loading, please wait.</string>
+    <string name="library_fail">There was a problem loading library.</string>
+    <string name="retry">Retry</string>
 </resources>

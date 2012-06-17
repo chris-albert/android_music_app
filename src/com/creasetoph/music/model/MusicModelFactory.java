@@ -10,9 +10,11 @@ public class MusicModelFactory {
     public static MusicModel getMusicModel(Type type) {
         switch (type) {
             case network:
-                return NetworkMusicModel.getInstance();
+                return new NetworkMusicModel();
+//                return NetworkMusicModel.getInstance();
             case local:
-                return LocalMusicModel.getInstance();
+                return new LocalMusicModel();
+//                return LocalMusicModel.getInstance();
         }
         return null;
     }

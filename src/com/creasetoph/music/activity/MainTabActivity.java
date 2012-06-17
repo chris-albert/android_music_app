@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.TabHost;
 import com.creasetoph.music.R;
 import com.creasetoph.music.model.MusicModelManager;
-import com.creasetoph.music.object.Library;
 
 public class MainTabActivity extends TabActivity {
 
@@ -32,28 +31,28 @@ public class MainTabActivity extends TabActivity {
         intent = new Intent().setClass(this,NetworkLibraryActivity.class);
         tabSpec = tabHost
                 .newTabSpec("network")
-                .setIndicator("Network",resources.getDrawable(R.drawable.ic_tab_artists))
+                .setIndicator("Network",resources.getDrawable(R.drawable.ic_tab_network))
                 .setContent(intent);
         tabHost.addTab(tabSpec);
 
         intent = new Intent().setClass(this,LocalLibraryActivity.class);
         tabSpec = tabHost
                 .newTabSpec("local")
-                .setIndicator("Local",resources.getDrawable(R.drawable.ic_tab_artists))
+                .setIndicator("Local",resources.getDrawable(R.drawable.ic_tab_local))
                 .setContent(intent);
         tabHost.addTab(tabSpec);
 
         intent = new Intent().setClass(this,PlaylistActivity.class);
         tabSpec = tabHost
                 .newTabSpec("playlist")
-                .setIndicator("Playlist",resources.getDrawable(R.drawable.ic_tab_artists))
+                .setIndicator("Playlist",resources.getDrawable(R.drawable.ic_tab_playlist))
                 .setContent(intent);
         tabHost.addTab(tabSpec);
 
         intent = new Intent().setClass(this,PlayerActivity.class);
         tabSpec = tabHost
                 .newTabSpec("player")
-                .setIndicator("Player",resources.getDrawable(R.drawable.ic_tab_artists))
+                .setIndicator("Player",resources.getDrawable(R.drawable.ic_tab_player))
                 .setContent(intent);
         tabHost.addTab(tabSpec);
 

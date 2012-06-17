@@ -20,10 +20,11 @@ public class NetworkMusicModel extends MusicModel {
 
     private Library _library = null;
 
-    private NetworkMusicModel() {
+    public NetworkMusicModel() {
         super();
         _library = new Library();
         json_url = Preferences.getString(Preferences.Name.json_url);
+//        json_url = "http://google.com/asdf";
         fetchJson();
     }
 

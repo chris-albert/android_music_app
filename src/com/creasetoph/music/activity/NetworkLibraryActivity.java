@@ -1,14 +1,12 @@
 package com.creasetoph.music.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +16,7 @@ import com.creasetoph.music.controller.LibraryController;
 import com.creasetoph.music.item.LibraryItem;
 import com.creasetoph.music.model.MusicModelFactory;
 import com.creasetoph.music.model.MusicModelManager;
+import com.creasetoph.music.object.Library;
 import com.creasetoph.music.util.Logger;
 
 import java.util.ArrayList;
@@ -34,6 +33,11 @@ public class NetworkLibraryActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Logger.debug("NetworkLibraryActivity onCreate");
+        fetchLibrary();
+    }
+
+    private void fetchLibrary() {
+        showLibraryLoading();
         MusicModelManager.getInstance().setCallback(MusicModelFactory.Type.network,new Handler.Callback() {
             @Override
             public boolean handleMessage(Message message) {
@@ -43,9 +47,28 @@ public class NetworkLibraryActivity extends Activity {
         });
     }
 
+    private void showLibraryLoading() {
+        setContentView(R.layout.library_loading);
+    }
+
+    private void showLibraryFailed() {
+        setContentView(R.layout.library_fail);
+    }
+
+    public void retryOnClick(View view) {
+        Logger.info("retry clicked");
+        showLibraryLoading();
+        MusicModelManager.getInstance().retryModelFetch(MusicModelFactory.Type.network);
+    }
+
     private void modelFinished() {
+        Logger.info("modelFinished");
         _controller = new LibraryController(MusicModelFactory.Type.network);
-        createListView(_controller.getLibrary());
+        if(_controller.libraryEmpty()) {
+            showLibraryFailed();
+        }else {
+            createListView(_controller.getLibrary());
+        }
     }
 
     public void onResume() {

@@ -44,6 +44,10 @@ public class LibraryController {
         return _libraryList.size();
     }
 
+    public boolean libraryEmpty() {
+        return getLibrarySize() == 0;
+    }
+
     public void addAlbumToPlaylist(String selection, int index) {
         String artist = "";
         for (int i = index; i >= 0; i--) {

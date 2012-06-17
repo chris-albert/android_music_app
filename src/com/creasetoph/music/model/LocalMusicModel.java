@@ -18,7 +18,7 @@ public class LocalMusicModel extends MusicModel {
 
     private Library _library = null;
 
-    private LocalMusicModel() {
+    public LocalMusicModel() {
         super();
         _library = new Library();
         _mediaPath = Preferences.getString(Preferences.Name.local_path);
