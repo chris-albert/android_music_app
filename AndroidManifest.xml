@@ -30,6 +30,7 @@
         <activity android:name=".activity.NetworkLibraryActivity"/>
         <activity android:name=".activity.LocalLibraryActivity"/>
         <activity android:name=".activity.MainTabActivity"/>
+        <activity android:name=".activity.LibraryActivity"/>
         <receiver android:name=".receiver.CallReceiver" android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />

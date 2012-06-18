@@ -60,8 +60,10 @@ public class LocalMusicModel extends MusicModel {
                                 albumObject.addTrack(trackObject);
                             }
                         }
+                        albumObject.sortTracks();
                     }
                 }
+                artistObject.sortAlbums();
                 _library.addArtist(artistObject);
             }
         }

@@ -3,12 +3,11 @@ package com.creasetoph.music.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
+import com.creasetoph.music.model.MusicModelFactory;
 
-public class LocalLibraryActivity extends Activity {
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        TextView textview = new TextView(this);
-        textview.setText("This is the Local Library tab");
-        setContentView(textview);
+public class LocalLibraryActivity extends LibraryActivity {
+
+    protected MusicModelFactory.Type getLibraryType() {
+        return MusicModelFactory.Type.local;
     }
 }

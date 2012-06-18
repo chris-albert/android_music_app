@@ -1,9 +1,7 @@
 package com.creasetoph.music.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.creasetoph.music.activity.PlaylistActivity;
-import com.creasetoph.music.controller.PlaylistController;
 import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.R;
 import com.creasetoph.music.util.Logger;
@@ -46,6 +43,23 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
         notifyDataSetChanged();
     }
 
+    private String formatPlayListItem(String item) {
+        return capitalize(item.replace("_"," ").replace(".mp3","").replaceAll("^\\d*",""));
+    }
+
+    private String capitalize(String string) {
+        String out = "";
+        String[] tokens = string.split("\\s");
+        for (String token : tokens) {
+            try {
+                out += Character.toUpperCase(token.charAt(0)) + token.substring(1) + " ";
+            }catch(IndexOutOfBoundsException ioobe) {
+                //If we get an IndexOutOfBoundsException then just dont add to string
+            }
+        }
+        return out.trim();
+    }
+
     /**
      * Gets the view for each item in adapter
      * @param position Position in items lise
@@ -60,7 +74,7 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistItem> {
         v = li.inflate(R.layout.playlist_item, null);
         TextView tv = (TextView) v.findViewById(R.id.track_name);
         if (tv != null) {
-            tv.setText(item.getTrack());
+            tv.setText(formatPlayListItem(item.getTrack()));
         }
         if(_context.isActive(position)) {
             v.setBackgroundColor(CURRENT_COLOR);

@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/album_item"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-	<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:id="@+id/album_name"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_marginLeft="15dip"
-	    android:padding="10dp"
-	    android:textSize="16sp" >
-	</TextView>
-</LinearLayout>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/album_item"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/album_name"
+          android:layout_width="wrap_content"
+          android:layout_height="fill_parent"
+          android:layout_marginRight="40dp"
+          android:layout_marginLeft="15dp"
+          android:padding="10dp"
+          android:textSize="16sp"
+          android:layout_alignParentLeft="true"/>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+           android:layout_height="18dp"
+           android:contentDescription=""
+           android:layout_marginTop="10dp"
+           android:layout_width="wrap_content"
+           android:layout_toLeftOf="@+id/right_one"
+           android:src="@drawable/ic_tab_player_white"/>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+           android:contentDescription=""
+           android:layout_marginTop="10dp"
+           android:layout_height="18dp"
+           android:id="@+id/right_one"
+           android:layout_alignParentRight="true"
+           android:layout_width="wrap_content"
+           android:src="@drawable/ic_tab_playlist_white"/>
+</RelativeLayout>
