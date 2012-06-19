@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.creasetoph.music.item.LibraryItem;
 import com.creasetoph.music.R;
 import com.creasetoph.music.item.PlaylistItem;
+import com.creasetoph.music.util.Logger;
 
 /**
  * Tells android how to draw the library list
@@ -57,9 +58,15 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
             if (tv != null) {
                 tv.setText(item.getValue());
             }
-        } else {
+        }else if(item.typeEquals(LibraryItem.Type.Album)){
             v = li.inflate(R.layout.album_item, null);
             TextView tv = (TextView) v.findViewById(R.id.album_name);
+            if (tv != null) {
+                tv.setText(item.getValue());
+            }
+        }else if(item.typeEquals(LibraryItem.Type.Track)){
+            v = li.inflate(R.layout.track_item, null);
+            TextView tv = (TextView) v.findViewById(R.id.track_name);
             if (tv != null) {
                 tv.setText(item.getValue());
             }

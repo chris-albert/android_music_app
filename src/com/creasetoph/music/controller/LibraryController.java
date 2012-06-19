@@ -95,4 +95,8 @@ public class LibraryController {
             Logger.log(npe);
         }
     }
+
+    public void addTracks(String artist,String album,int index) {
+
+    }
 }

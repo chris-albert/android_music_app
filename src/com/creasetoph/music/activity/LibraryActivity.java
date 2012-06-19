@@ -81,15 +81,28 @@ public abstract class LibraryActivity extends Activity {
             if (_controller.getLibrarySize() > position + 1 &&
                     _controller.getLibrary().get(position + 1).getType() == LibraryItem.Type.Album) {
                 _controller.removeAlbums(selection, position);
-            } else {
+            }else {
                 _controller.addAlbums(selection, position);
             }
             _adapter.notifyDataSetChanged();
-        } else if (view.getId() == R.id.album_item) {
-            TextView tv = (TextView) view.findViewById(R.id.album_name);
-            String selection = tv.getText().toString();
-            _controller.clearPlaylist();
-            _controller.addAlbumToPlaylist(selection, position);
+        }else if (view.getId() == R.id.album_item) {
+            TextView artistText = (TextView) view.findViewById(R.id.artist_name);
+            TextView albumText = (TextView) view.findViewById(R.id.album_name);
+            String artist = null;
+            for(int i = position;i >= 0;i--) {
+                if(_adapter.getItem(i).typeEquals(LibraryItem.Type.Artist)) {
+                    artist = _adapter.getItem(i).getValue();
+                    break;
+                }
+            }
+            if(albumText != null) {
+                String album = albumText.getText().toString();
+                Logger.info("Artist: " + artist + ", Album: " + album);
+            }
+//            TextView tv = (TextView) view.findViewById(R.id.album_name);
+//            String selection = tv.getText().toString();
+//            _controller.clearPlaylist();
+//            _controller.addAlbumToPlaylist(selection, position);
         }
     }
 
@@ -110,4 +123,7 @@ public abstract class LibraryActivity extends Activity {
         _adapter.setItems(_controller.getLibrary());
     }
 
+    public void onActionClick(View view) {
+        Logger.debug("Action Clicked");
+    }
 }
