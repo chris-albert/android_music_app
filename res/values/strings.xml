@@ -14,4 +14,6 @@
     <string name="library_fail">There was a problem loading library.</string>
     <string name="retry">Retry</string>
     <string name="action_button">Action Button</string>
+    <string name="album_title">Albums</string>
+    <string name="track_title">Tracks</string>
 </resources>

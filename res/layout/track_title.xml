@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/album_item"
+                    android:background="@color/dark_gray"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" >
+        <View
+                android:layout_width=".5dp"
+                android:layout_height="fill_parent"
+                android:background="@color/dark_gray"/>
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/album_title"
+                  android:text="@string/track_title"
+                  android:textColor="@color/black"
+                  android:layout_width="wrap_content"
+                  android:layout_height="fill_parent"
+                  android:layout_marginRight="40dp"
+                  android:padding="10dp"
+                  android:textSize="16sp"
+                  android:layout_alignParentLeft="true"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -8,6 +8,7 @@ import com.creasetoph.music.object.Playlist;
 import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.object.PlaylistTrack;
 import com.creasetoph.music.object.Sound;
+import com.creasetoph.music.object.Track;
 import com.creasetoph.music.util.Logger;
 import com.creasetoph.music.util.Preferences;
 
@@ -56,6 +57,10 @@ public class PlaylistController {
     public void addToPlaylist(String artist, String album, String track) {
         Logger.info("Adding to playlist(" + artist + "," + album + "," + track + ")");
         _playlist.addToPlaylist(artist, album, track);
+    }
+
+    public void addToPlaylist(Track track) {
+        _playlist.addToPlaylist(track);
     }
 
     public void clearPlaylist() {
@@ -135,12 +140,7 @@ public class PlaylistController {
         play();
     }
 
-    public ArrayList<PlaylistItem> getPlaylistItems() {
-        ArrayList<PlaylistTrack> tracks = _playlist.getPlaylistTracks();
-        ArrayList<PlaylistItem> items = new ArrayList<PlaylistItem>();
-        for (PlaylistTrack track : tracks) {
-            items.add(new PlaylistItem(track.getTrack()));
-        }
-        return items;
+    public ArrayList<PlaylistTrack> getPlaylistItems() {
+        return _playlist.getPlaylistTracks();
     }
 }

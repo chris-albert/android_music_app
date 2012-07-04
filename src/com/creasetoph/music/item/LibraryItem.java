@@ -1,7 +1,7 @@
 package com.creasetoph.music.item;
 
 /**
- * Holds items for the library list view
+ * Holds state for the items in the library list view
  */
 public class LibraryItem implements Comparable<LibraryItem> {
 
@@ -16,6 +16,10 @@ public class LibraryItem implements Comparable<LibraryItem> {
     private Type _type;
     //The value
     private String _value;
+    //If item is opened
+    private boolean _opened = false;
+    //Position of item in list of items
+    private int _position = -1;
 
     /**
      * Constructor set the type and value
@@ -66,6 +70,26 @@ public class LibraryItem implements Comparable<LibraryItem> {
      */
     public boolean typeEquals(Type type) {
         return _type == type;
+    }
+
+    public void openItem() {
+        _opened = true;
+    }
+
+    public void closeItem() {
+        _opened = false;
+    }
+
+    public boolean isOpened() {
+        return _opened;
+    }
+
+    public void setPosition(int position) {
+        _position = position;
+    }
+
+    public int getPosition() {
+        return _position;
     }
 
     /**

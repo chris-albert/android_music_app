@@ -1,15 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/playlist_item"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/track_name"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:layout_marginLeft="15dip"
-              android:padding="10dp"
-              android:textSize="16sp">
-    </TextView>
+          android:layout_height="fill_parent"
+          android:layout_width="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/playlist_item"
+                android:layout_width="fill_parent"
+                android:gravity="center"
+                android:layout_height="fill_parent" >
+    <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+                   android:orientation="vertical"
+                   android:layout_width="fill_parent"
+                   android:layout_height="fill_parent"
+                   android:layout_alignParentLeft="true">
+        <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+                       android:layout_width="fill_parent"
+                       android:paddingLeft="10dp"
+                       android:layout_height="wrap_content" >
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:id="@+id/playlist_track"
+                      android:textStyle="bold"
+                      android:layout_width="wrap_content"
+                      android:layout_height="fill_parent"
+                      android:paddingRight="10dp"
+                      android:paddingTop="10dp"
+                      android:textSize="16sp" />
+        </LinearLayout>
+        <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+                       android:layout_width="fill_parent"
+                       android:paddingLeft="10dp"
+                       android:layout_gravity="bottom"
+                       android:layout_height="wrap_content" >
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:id="@+id/playlist_artist"
+                      android:layout_width="wrap_content"
+                      android:layout_height="fill_parent"
+                      android:paddingBottom="10dp"
+                      android:paddingRight="0dp"
+                      android:gravity="bottom"
+                      android:textSize="14sp"/>
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:id="@+id/playlist_album"
+                      android:layout_width="wrap_content"
+                      android:layout_height="fill_parent"
+                      android:paddingBottom="10dp"
+                      android:paddingRight="10dp"
+                      android:gravity="bottom"
+                      android:textSize="12sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="30dp"
+            android:gravity="center_vertical"
+            android:onClick="onActionClick"
+            android:layout_alignParentRight="true"
+            android:layout_height="fill_parent" >
+        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                   android:contentDescription="@string/action_button"
+                   android:layout_height="18dp"
+                   android:layout_width="wrap_content"
+                   android:src="@drawable/ic_action"/>
+    </RelativeLayout>
+    <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="fill_parent"
+            android:layout_height=".5dp"
+            android:background="@color/dark_gray"/>
+</RelativeLayout>
 </LinearLayout>

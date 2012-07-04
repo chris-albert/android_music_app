@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/artist_item"
-      android:layout_width="fill_parent"
-      android:gravity="center"
-      android:layout_height="fill_parent" >
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:text="@string/library_loading"
-              android:id="@+id/artist_name"
-              android:layout_width="wrap_content"
-              android:layout_height="fill_parent"
-              android:layout_marginRight="30dp"
-              android:padding="10dp"
-              android:textSize="16sp"
-              android:layout_alignParentLeft="true"/>
-    <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="30dp"
-            android:gravity="center"
-            android:onClick="onActionClick"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:layout_alignParentRight="true"
-            android:layout_height="fill_parent" >
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-                   android:contentDescription="@string/action_button"
-                   android:layout_height="18dp"
-                   android:layout_width="wrap_content"
-                   android:src="@drawable/ic_action"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/artist_item"
+          android:layout_width="fill_parent"
+          android:gravity="center"
+          android:onClick="onArtistClick"
+          android:layout_height="fill_parent" >
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/artist_name"
+                  android:layout_width="wrap_content"
+                  android:layout_height="fill_parent"
+                  android:layout_marginRight="30dp"
+                  android:padding="10dp"
+                  android:textSize="16sp"
+                  android:layout_alignParentLeft="true"/>
+        <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="30dp"
+                android:gravity="center"
+                android:onClick="onActionClick"
+                android:layout_alignParentRight="true"
+                android:layout_height="fill_parent" >
+            <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                       android:contentDescription="@string/action_button"
+                       android:layout_height="18dp"
+                       android:layout_width="wrap_content"
+                       android:src="@drawable/ic_action"/>
+        </RelativeLayout>
+        <View
+                android:layout_alignParentBottom="true"
+                android:layout_width="fill_parent"
+                android:layout_height=".5dp"
+                android:background="@color/dark_gray"/>
     </RelativeLayout>
-</RelativeLayout>
+</LinearLayout>

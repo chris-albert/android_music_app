@@ -6,7 +6,7 @@ import java.util.Collections;
 /**
  * Artist object has a name and holds albums
  */
-public class Artist extends MusicItem {
+public class Artist extends MusicItem implements Comparable<Artist>{
 
     //Albums for this artist
     private ArrayList<Album> _albums = new ArrayList<Album>();
@@ -58,5 +58,16 @@ public class Artist extends MusicItem {
             }
         }
         return null;
+    }
+
+    /**
+     * Comparator so we can sort artist
+     * @param another Other Artist to compare to
+     * @return 0 if the strings are equal, a negative integer if this string is
+     *         before the specified string, or a positive integer if this string is
+     *         after the specified string.
+     */
+    public int compareTo(Artist another) {
+        return _name.compareTo(another.getName());
     }
 }

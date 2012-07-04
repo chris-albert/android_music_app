@@ -1,23 +1,24 @@
 package com.creasetoph.music.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.creasetoph.music.item.LibraryItem;
 import com.creasetoph.music.R;
-import com.creasetoph.music.item.PlaylistItem;
+import com.creasetoph.music.item.LibraryItem;
+import com.creasetoph.music.object.Album;
+import com.creasetoph.music.object.Artist;
+import com.creasetoph.music.object.Track;
+import com.creasetoph.music.util.Formatter;
 import com.creasetoph.music.util.Logger;
 
-/**
- * Tells android how to draw the library list
- */
-public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class LibraryAdapter extends ArrayAdapter<Artist> {
 
     //Context of application
     private Context _context;
@@ -29,17 +30,9 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
      *                           TextView to use when instantiating views.
      * @param items Items to show in list view
      */
-    public LibraryAdapter(Context context, int textViewResourceId, ArrayList<LibraryItem> items) {
+    public LibraryAdapter(Context context, int textViewResourceId, ArrayList<Artist> items) {
         super(context, textViewResourceId, items);
         _context = context;
-    }
-
-    public void setItems(List<LibraryItem> items) {
-        clear();
-        for (LibraryItem item : items) {
-            add(item);
-        }
-        notifyDataSetChanged();
     }
 
     /**
@@ -50,25 +43,37 @@ public class LibraryAdapter extends ArrayAdapter<LibraryItem> {
      * @return Updated view with item added to it
      */
     public View getView(int position, View v, ViewGroup parent) {
-        LibraryItem item = getItem(position);
+        Artist artist = getItem(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (item.typeEquals(LibraryItem.Type.Artist)) {
-            v = li.inflate(R.layout.artist_item, null);
-            TextView tv = (TextView) v.findViewById(R.id.artist_name);
-            if (tv != null) {
-                tv.setText(item.getValue());
-            }
-        }else if(item.typeEquals(LibraryItem.Type.Album)){
-            v = li.inflate(R.layout.album_item, null);
-            TextView tv = (TextView) v.findViewById(R.id.album_name);
-            if (tv != null) {
-                tv.setText(item.getValue());
-            }
-        }else if(item.typeEquals(LibraryItem.Type.Track)){
-            v = li.inflate(R.layout.track_item, null);
-            TextView tv = (TextView) v.findViewById(R.id.track_name);
-            if (tv != null) {
-                tv.setText(item.getValue());
+
+        v = li.inflate(R.layout.library_item,null);
+        LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.library_item);
+        View artistView = li.inflate(R.layout.artist_item,linearLayout);
+        TextView tv = (TextView) artistView.findViewById(R.id.artist_name);
+        tv.setTag(R.id.artist_item,artist);
+        tv.setText(artist.getName());
+        if(artist.opened()) {
+            linearLayout.addView(li.inflate(R.layout.album_title,null));
+            for(Album album: artist.getAlbums()) {
+                View view = li.inflate(R.layout.album_item,null);
+                TextView textView = (TextView) view.findViewById(R.id.album_name);
+                textView.setTag(R.id.artist_item,artist);
+                textView.setTag(R.id.album_item,album);
+                textView.setText(album.getName());
+                linearLayout.addView(view);
+                if(album.opened()) {
+                    linearLayout.addView(li.inflate(R.layout.track_title,null));
+                    Album selectedAlbum = getItem(position).getAlbum(album.getName());
+                    for(Track track: selectedAlbum.getTracks()) {
+                        View trackView = li.inflate(R.layout.track_item,null);
+                        TextView trackText = (TextView) trackView.findViewById(R.id.track_name);
+                        trackText.setTag(R.id.artist_item,artist);
+                        trackText.setTag(R.id.album_item,album);
+                        trackText.setTag(R.id.track_item,track);
+                        trackText.setText(Formatter.formatTrack(track.getName()));
+                        linearLayout.addView(trackView);
+                    }
+                }
             }
         }
         return v;

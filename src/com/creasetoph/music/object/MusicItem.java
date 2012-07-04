@@ -1,5 +1,7 @@
 package com.creasetoph.music.object;
 
+import com.creasetoph.music.util.Logger;
+
 /**
  * Abstract class for holding any info for a music item (Artist,Album,Track)
  * Every item has a name and getters and setter for it
@@ -8,6 +10,22 @@ public abstract class MusicItem {
 
     //Name of the item Ex. (Artist name,Album name,Track name)
     protected String _name = "";
+
+    protected boolean _opened = false;
+
+    public void open() {
+        Logger.info("Opening " + getName());
+        _opened = true;
+    }
+
+    public void close() {
+        Logger.info("Closing " + getName());
+        _opened = false;
+    }
+
+    public boolean opened() {
+        return _opened;
+    }
 
     /**
      * Getter for the name of the item

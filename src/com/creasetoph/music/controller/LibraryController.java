@@ -7,11 +7,9 @@ import java.util.List;
 import com.creasetoph.music.item.LibraryItem;
 import com.creasetoph.music.model.MusicModelFactory;
 import com.creasetoph.music.model.MusicModelManager;
+import com.creasetoph.music.object.*;
 import com.creasetoph.music.util.Logger;
 import com.creasetoph.music.model.MusicModel;
-import com.creasetoph.music.object.Album;
-import com.creasetoph.music.object.Artist;
-import com.creasetoph.music.object.Track;
 
 public class LibraryController {
 
@@ -40,6 +38,10 @@ public class LibraryController {
         return _libraryList;
     }
 
+    public Library getModelLibrary() {
+        return _model.getLibrary();
+    }
+
     public int getLibrarySize() {
         return _libraryList.size();
     }
@@ -48,23 +50,41 @@ public class LibraryController {
         return getLibrarySize() == 0;
     }
 
-    public void addAlbumToPlaylist(String selection, int index) {
-        String artist = "";
-        for (int i = index; i >= 0; i--) {
-            if (_libraryList.get(i).getType() == LibraryItem.Type.Artist) {
-                artist = _libraryList.get(i).getValue();
-                break;
+    public void addArtistToPlaylist(Artist artist) {
+        Logger.info("Adding artist (" + artist.getName() + ") to playlist");
+        for(Album album: artist.getAlbums()) {
+            for(Track track: album.getTracks()) {
+                _playlistController.addToPlaylist(artist.getName(),album.getName(),track.getName());
             }
         }
-        Logger.info("Artist: " + artist + ", Selection: " + selection);
-        try {
-            List<Track> tracks = _model.getLibrary().getArtist(artist).getAlbum(selection).getTracks();
-            for (Track track : tracks) {
-                _playlistController.addToPlaylist(artist, selection, track.getName());
-            }
+    }
+
+    public void addAlbumToPlaylist(Album album) {
+        Logger.info("Adding album (" + album.getName() + ") to playlist");
+        for(Track track: album.getTracks()) {
+            _playlistController.addToPlaylist(album.getArtist(),album.getName(),track.getName());
+        }
+    }
+
+    public void addTrackToPlaylist(Track track) {
+        Logger.info("Adding track (" + track.getName() + ") to playlist");
+        _playlistController.addToPlaylist(track.getArtist(),track.getAlbum(),track.getName());
+    }
+
+    public void addToPlaylist(MusicItem item,boolean replace) {
+        if(replace) {
+            _playlistController.stop();
+            clearPlaylist();
+        }
+        if(item instanceof Artist) {
+            addArtistToPlaylist((Artist) item);
+        }else if(item instanceof Album) {
+            addAlbumToPlaylist((Album) item);
+        }else if(item instanceof Track) {
+            addTrackToPlaylist((Track) item);
+        }
+        if(replace) {
             _playlistController.playPause();
-        } catch (NullPointerException npe) {
-            Logger.log(npe);
         }
     }
 
@@ -72,31 +92,4 @@ public class LibraryController {
         _playlistController.clearPlaylist();
     }
 
-    public void removeAlbums(String artist, int index) {
-        int start = index + 1;
-        for (int i = start; i <= _libraryList.size(); i++) {
-            if (_libraryList.get(start).getType() == LibraryItem.Type.Album) {
-                _libraryList.remove(start);
-            } else {
-                break;
-            }
-        }
-    }
-
-    public void addAlbums(String artist, int index) {
-        Logger.info("Artist selected: " + artist);
-        ArrayList<LibraryItem> albums = new ArrayList<LibraryItem>();
-        try {
-            for (Album album : _model.getLibrary().getArtist(artist).getAlbums()) {
-                albums.add(new LibraryItem(LibraryItem.Type.Album, album.getName()));
-            }
-            _libraryList.addAll(index + 1, albums);
-        } catch (NullPointerException npe) {
-            Logger.log(npe);
-        }
-    }
-
-    public void addTracks(String artist,String album,int index) {
-
-    }
 }

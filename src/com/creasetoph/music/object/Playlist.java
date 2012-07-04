@@ -9,6 +9,7 @@ public class Playlist {
 
     //List of playlist tracks
     private ArrayList<PlaylistTrack> _playlistTracks;
+    private ArrayList<Track> _tracks;
     //Currently playing track
     private int _currentTrackIndex = 0;
 
@@ -27,6 +28,10 @@ public class Playlist {
      */
     public void addToPlaylist(String artist, String album, String track) {
         _playlistTracks.add(new PlaylistTrack(artist, album, track));
+    }
+
+    public void addToPlaylist(Track track) {
+        _tracks.add(track);
     }
 
     /**
