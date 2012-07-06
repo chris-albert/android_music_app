@@ -10,6 +10,8 @@ public abstract class MusicItem {
 
     //Name of the item Ex. (Artist name,Album name,Track name)
     protected String _name = "";
+    protected long _size = -1;
+    protected String _path = null;
 
     protected boolean _opened = false;
 
@@ -25,6 +27,16 @@ public abstract class MusicItem {
 
     public boolean opened() {
         return _opened;
+    }
+
+    public MusicItem setSize(long size) {
+        _size = size;
+        return this;
+    }
+
+    public MusicItem setPath(String path) {
+        _path = path;
+        return this;
     }
 
     /**

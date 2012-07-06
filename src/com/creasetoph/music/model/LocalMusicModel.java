@@ -53,18 +53,25 @@ public class LocalMusicModel extends MusicModel {
             if (file.isDirectory()) {
                 String artist = file.getName();
                 Artist artistObject = new Artist(_library,artist);
+                artistObject.setSize(file.getTotalSpace());
+                artistObject.setPath(file.getAbsolutePath());
                 File[] artists = new File(path + "/" + artist).listFiles();
                 for (File artistFile : artists) {
                     if (artistFile.isDirectory()) {
                         String album = artistFile.getName();
                         Album albumObject = new Album(artistObject, album);
+                        albumObject.setSize(artistFile.getTotalSpace());
+                        albumObject.setPath(artistFile.getAbsolutePath());
                         artistObject.addAlbum(albumObject);
                         File[] tracks = new File(path + "/" + artist + "/" + album).listFiles();
                         for (File trackFile : tracks) {
                             if (trackFile.isFile()) {
                                 String track = trackFile.getName();
                                 Track trackObject = new Track(albumObject, track);
+                                trackObject.setSize(trackFile.getTotalSpace());
+                                trackObject.setPath(trackFile.getAbsolutePath());
                                 albumObject.addTrack(trackObject);
+                                trackFile.getTotalSpace();
                             }
                         }
                         albumObject.sortTracks();
