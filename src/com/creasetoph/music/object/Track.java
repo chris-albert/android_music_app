@@ -1,44 +1,24 @@
 package com.creasetoph.music.object;
 
+import com.creasetoph.music.util.HttpUtil;
+
 /**
  * Track object has a track name
  */
 public class Track extends MusicItem implements Comparable<Track> {
 
-    //Artist name
-    private String _artist = "";
     //Album name
-    private String _album = "";
+    private Album _album;
 
     /**
      * Constructor sets the name for the track, album, and artist
      *
-     * @param artist Artist name
      * @param album  Album name
      * @param name   Track name
      */
-    public Track(String artist, String album, String name) {
-        setArtist(artist);
+    public Track( Album album, String name) {
         setAlbum(album);
         setName(name);
-    }
-
-    /**
-     * Getter for the artist name
-     *
-     * @return Artist name
-     */
-    public String getArtist() {
-        return _artist;
-    }
-
-    /**
-     * Setter for the artist name
-     *
-     * @param artist The artist name
-     */
-    public void setArtist(String artist) {
-        _artist = artist;
     }
 
     /**
@@ -46,7 +26,7 @@ public class Track extends MusicItem implements Comparable<Track> {
      *
      * @return Album name
      */
-    public String getAlbum() {
+    public Album getAlbum() {
         return _album;
     }
 
@@ -55,7 +35,7 @@ public class Track extends MusicItem implements Comparable<Track> {
      *
      * @param album Album name
      */
-    public void setAlbum(String album) {
+    public void setAlbum(Album album) {
         _album = album;
     }
 
@@ -68,5 +48,9 @@ public class Track extends MusicItem implements Comparable<Track> {
      */
     public int compareTo(Track track) {
         return getName().compareTo(track.getName());
+    }
+
+    public String getPath() {
+        return getAlbum().getArtist().getLibrary().getPath(this);
     }
 }

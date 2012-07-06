@@ -1,5 +1,9 @@
 package com.creasetoph.music.object;
 
+import com.creasetoph.music.model.MusicModel;
+import com.creasetoph.music.model.MusicModelFactory;
+import com.creasetoph.music.model.MusicModelManager;
+
 import java.util.ArrayList;
 
 /**
@@ -9,6 +13,11 @@ public class Library {
 
     //Albums in this library
     private ArrayList<Artist> _artists = new ArrayList<Artist>();
+    private MusicModel _musicModel;
+
+    public Library(MusicModel musicModel) {
+        _musicModel = musicModel;
+    }
 
     /**
      * Adds an artist to the library
@@ -17,15 +26,6 @@ public class Library {
      */
     public void addArtist(Artist artist) {
         _artists.add(artist);
-    }
-
-    /**
-     * Wrapper for adding an artist with a string name
-     *
-     * @param artist Artist name to create a new artist object for
-     */
-    public void addArtist(String artist) {
-        addArtist(new Artist(artist));
     }
 
     /**
@@ -50,6 +50,10 @@ public class Library {
             }
         }
         return null;
+    }
+
+    public String getPath(Track track) {
+        return _musicModel.getPath(track);
     }
 
     /**

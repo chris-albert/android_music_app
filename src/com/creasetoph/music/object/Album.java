@@ -12,7 +12,7 @@ public class Album extends MusicItem implements Comparable<Album> {
     //Tracks for this album
     private ArrayList<Track> _tracks = new ArrayList<Track>();
     //Artist name
-    private String _artist = "";
+    private Artist _artist;
 
     /**
      * Constructor sets the artist and album name
@@ -20,7 +20,7 @@ public class Album extends MusicItem implements Comparable<Album> {
      * @param artist Artist name
      * @param name   Album name
      */
-    public Album(String artist, String name) {
+    public Album(Artist artist, String name) {
         setArtist(artist);
         setName(name);
     }
@@ -30,7 +30,7 @@ public class Album extends MusicItem implements Comparable<Album> {
      *
      * @return Artist name
      */
-    public String getArtist() {
+    public Artist getArtist() {
         return _artist;
     }
 
@@ -39,7 +39,7 @@ public class Album extends MusicItem implements Comparable<Album> {
      *
      * @param artist Artist name
      */
-    public void setArtist(String artist) {
+    public void setArtist(Artist artist) {
         _artist = artist;
     }
 

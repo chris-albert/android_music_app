@@ -10,14 +10,20 @@ public class Artist extends MusicItem implements Comparable<Artist>{
 
     //Albums for this artist
     private ArrayList<Album> _albums = new ArrayList<Album>();
+    private Library _library;
 
     /**
      * Constructor sets name for artist
      *
      * @param name Artist name
      */
-    public Artist(String name) {
+    public Artist(Library library,String name) {
+        _library = library;
         setName(name);
+    }
+
+    public Library getLibrary() {
+        return _library;
     }
 
     /**

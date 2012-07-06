@@ -54,7 +54,7 @@ public class LibraryController {
         Logger.info("Adding artist (" + artist.getName() + ") to playlist");
         for(Album album: artist.getAlbums()) {
             for(Track track: album.getTracks()) {
-                _playlistController.addToPlaylist(artist.getName(),album.getName(),track.getName());
+                _playlistController.addToPlaylist(track);
             }
         }
     }
@@ -62,13 +62,13 @@ public class LibraryController {
     public void addAlbumToPlaylist(Album album) {
         Logger.info("Adding album (" + album.getName() + ") to playlist");
         for(Track track: album.getTracks()) {
-            _playlistController.addToPlaylist(album.getArtist(),album.getName(),track.getName());
+            _playlistController.addToPlaylist(track);
         }
     }
 
     public void addTrackToPlaylist(Track track) {
         Logger.info("Adding track (" + track.getName() + ") to playlist");
-        _playlistController.addToPlaylist(track.getArtist(),track.getAlbum(),track.getName());
+        _playlistController.addToPlaylist(track);
     }
 
     public void addToPlaylist(MusicItem item,boolean replace) {

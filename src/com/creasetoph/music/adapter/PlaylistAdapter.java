@@ -1,6 +1,5 @@
 package com.creasetoph.music.adapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -10,16 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.creasetoph.music.activity.PlaylistActivity;
-import com.creasetoph.music.item.PlaylistItem;
 import com.creasetoph.music.R;
-import com.creasetoph.music.object.PlaylistTrack;
+import com.creasetoph.music.object.Track;
 import com.creasetoph.music.util.Formatter;
 import com.creasetoph.music.util.Logger;
 
 /**
  * Tells android how to draw the playlist list
  */
-public class PlaylistAdapter extends ArrayAdapter<PlaylistTrack> {
+public class PlaylistAdapter extends ArrayAdapter<Track> {
 
     //Current context
     private PlaylistActivity _context;
@@ -33,14 +31,14 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistTrack> {
      *                           TextView to use when instantiating views.
      * @param items Items to show in list view
      */
-    public PlaylistAdapter(PlaylistActivity context, int textViewResourceId, List<PlaylistTrack> items) {
+    public PlaylistAdapter(PlaylistActivity context, int textViewResourceId, List<Track> items) {
         super(context, textViewResourceId, items);
         _context = context;
     }
 
-    public void setItems(List<PlaylistTrack> playlistTracks) {
+    public void setItems(List<Track> playlistTracks) {
         clear();
-        for (PlaylistTrack item : playlistTracks) {
+        for (Track item : playlistTracks) {
             add(item);
         }
         notifyDataSetChanged();
@@ -55,15 +53,15 @@ public class PlaylistAdapter extends ArrayAdapter<PlaylistTrack> {
      */
     public View getView(int position, View v, ViewGroup parent) {
         Logger.debug("PlaylistAdapter position: " + position);
-        PlaylistTrack item = getItem(position);
+        Track item = getItem(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = li.inflate(R.layout.playlist_item,null);
         TextView artistText = (TextView) v.findViewById(R.id.playlist_artist);
-        artistText.setText(item.getArtist() + "/");
+        artistText.setText(item.getAlbum().getArtist() + "/");
         TextView albumText = (TextView) v.findViewById(R.id.playlist_album);
-        albumText.setText(item.getAlbum());
+        albumText.setText(item.getAlbum().toString());
         TextView trackText = (TextView) v.findViewById(R.id.playlist_track);
-        trackText.setText(Formatter.formatTrack(item.getTrack()));
+        trackText.setText(Formatter.formatTrack(item.getName()));
         if(_context.isActive(position)) {
             v.setBackgroundColor(CURRENT_COLOR);
         }

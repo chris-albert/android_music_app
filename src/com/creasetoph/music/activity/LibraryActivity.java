@@ -138,7 +138,7 @@ public abstract class LibraryActivity extends Activity {
             itemView = v.findViewById(R.id.track_name);
             Track track = (Track) itemView.getTag(R.id.track_item);
             _actionSelected = track;
-            Logger.info("Artist: " + track.getArtist() + ",Album: " + track.getAlbum() + ",Track: " + track.getName());
+            Logger.info("Artist: " + track.getAlbum().getArtist() + ",Album: " + track.getAlbum() + ",Track: " + track.getName());
         }
         showDialog(1);
     }

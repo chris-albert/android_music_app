@@ -5,18 +5,14 @@ import java.util.ArrayList;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import com.creasetoph.music.object.Playlist;
-import com.creasetoph.music.item.PlaylistItem;
-import com.creasetoph.music.object.PlaylistTrack;
 import com.creasetoph.music.object.Sound;
 import com.creasetoph.music.object.Track;
 import com.creasetoph.music.util.Logger;
-import com.creasetoph.music.util.Preferences;
 
 public class PlaylistController {
 
-    private static PlaylistController _instance    = null;
-    private static String             _baseUrl     = null;
-    private static boolean            repeat_album = true;
+    private static PlaylistController _instance = null;
+    private static boolean _repeat_album = true;
 
     private Playlist _playlist;
     private Sound    _sound;
@@ -42,7 +38,6 @@ public class PlaylistController {
         _sound = new Sound(_onPreparedListener);
         _playing = false;
         _paused = false;
-        _baseUrl = Preferences.getString(Preferences.Name.stream_url);
         registerSoundListeners();
     }
 
@@ -52,11 +47,6 @@ public class PlaylistController {
                 next();
             }
         });
-    }
-
-    public void addToPlaylist(String artist, String album, String track) {
-        Logger.info("Adding to playlist(" + artist + "," + album + "," + track + ")");
-        _playlist.addToPlaylist(artist, album, track);
     }
 
     public void addToPlaylist(Track track) {
@@ -82,8 +72,9 @@ public class PlaylistController {
             _playing = true;
         } else {
             String path = _playlist.getCurrentPlaylistTrackPath();
+            Logger.info("Loading: " + path);
             if (path != null) {
-                _sound.load(_baseUrl + path);
+                _sound.load(path);
             }
         }
     }
@@ -109,7 +100,7 @@ public class PlaylistController {
         if (_playlist.getCurrentTrackIndex() < _playlist.size() - 1) {
             _playlist.setCurrentTrackIndex(_playlist.getCurrentTrackIndex() + 1);
             play();
-        } else if (repeat_album) {
+        } else if (_repeat_album) {
             _playlist.setCurrentTrackIndex(0);
             play();
         }
@@ -120,7 +111,7 @@ public class PlaylistController {
         if (_playlist.getCurrentTrackIndex() > 0) {
             _playlist.setCurrentTrackIndex(_playlist.getCurrentTrackIndex() - 1);
             play();
-        } else if (repeat_album) {
+        } else if (_repeat_album) {
             _playlist.setCurrentTrackIndex(_playlist.getCurrentTrackIndex() - 1);
             play();
         }
@@ -140,7 +131,7 @@ public class PlaylistController {
         play();
     }
 
-    public ArrayList<PlaylistTrack> getPlaylistItems() {
+    public ArrayList<Track> getPlaylistItems() {
         return _playlist.getPlaylistTracks();
     }
 }

@@ -12,8 +12,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.creasetoph.music.*;
 import com.creasetoph.music.adapter.PlaylistAdapter;
 import com.creasetoph.music.controller.PlaylistController;
-import com.creasetoph.music.item.PlaylistItem;
-import com.creasetoph.music.object.PlaylistTrack;
+import com.creasetoph.music.object.Track;
 import com.creasetoph.music.util.Logger;
 
 public class PlaylistActivity extends Activity {
@@ -42,7 +41,7 @@ public class PlaylistActivity extends Activity {
         Logger.debug("PlaylistActivity onResume");
     }
 
-    private List<PlaylistTrack> getPlaylistList() {
+    private List<Track> getPlaylistList() {
         return _controller.getPlaylistItems();
     }
 
@@ -53,7 +52,7 @@ public class PlaylistActivity extends Activity {
     private void createListView() {
         _listView = new ListView(this);
         _listView.setTextFilterEnabled(true);
-        _adapter = new PlaylistAdapter(this, PLAYLIST_ITEM,new ArrayList<PlaylistTrack>());
+        _adapter = new PlaylistAdapter(this, PLAYLIST_ITEM,new ArrayList<Track>());
         _listView.setAdapter(_adapter);
         _listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -64,7 +63,7 @@ public class PlaylistActivity extends Activity {
     }
 
     private void updateListView() {
-        List<PlaylistTrack> tracks = getPlaylistList();
+        List<Track> tracks = getPlaylistList();
         Logger.info("tracks: " + tracks.size());
         _adapter.setItems(tracks);
     }

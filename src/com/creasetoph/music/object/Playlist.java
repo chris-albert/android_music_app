@@ -8,8 +8,7 @@ import java.util.ArrayList;
 public class Playlist {
 
     //List of playlist tracks
-    private ArrayList<PlaylistTrack> _playlistTracks;
-    private ArrayList<Track> _tracks;
+    private ArrayList<Track> _playlistTracks;
     //Currently playing track
     private int _currentTrackIndex = 0;
 
@@ -17,21 +16,11 @@ public class Playlist {
      * Constructor initializes playlist array
      */
     public Playlist() {
-        _playlistTracks = new ArrayList<PlaylistTrack>();
-    }
-
-    /**
-     * Adds a track to the playlist
-     * @param artist Artist name
-     * @param album Album name
-     * @param track Track name
-     */
-    public void addToPlaylist(String artist, String album, String track) {
-        _playlistTracks.add(new PlaylistTrack(artist, album, track));
+        _playlistTracks = new ArrayList<Track>();
     }
 
     public void addToPlaylist(Track track) {
-        _tracks.add(track);
+        _playlistTracks.add(track);
     }
 
     /**
@@ -70,7 +59,7 @@ public class Playlist {
      * Gets the current playlist track
      * @return The current playlist track
      */
-    public PlaylistTrack getCurrentPlaylistTrack() {
+    public Track getCurrentPlaylistTrack() {
         return _playlistTracks.get(getCurrentTrackIndex());
     }
 
@@ -79,9 +68,9 @@ public class Playlist {
      * @return Encoded path the playlist track
      */
     public String getCurrentPlaylistTrackPath() {
-        PlaylistTrack playlistTrack = getCurrentPlaylistTrack();
+        Track playlistTrack = getCurrentPlaylistTrack();
         if (playlistTrack != null) {
-            return playlistTrack.toString();
+            return playlistTrack.getPath();
         }
         return null;
     }
@@ -90,7 +79,7 @@ public class Playlist {
      * Gets all playlist tracks
      * @return Array of playlist tracks
      */
-    public ArrayList<PlaylistTrack> getPlaylistTracks() {
+    public ArrayList<Track> getPlaylistTracks() {
         return _playlistTracks;
     }
 }

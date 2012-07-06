@@ -51,10 +51,10 @@ public final class R {
         public static final int music_list=0x7f090009;
         public static final int next_button=0x7f09000e;
         public static final int play_pause_button=0x7f09000b;
-        public static final int playlist_album=0x7f090011;
-        public static final int playlist_artist=0x7f090010;
+        public static final int playlist_album=0x7f090012;
+        public static final int playlist_artist=0x7f090011;
         public static final int playlist_item=0x7f09000f;
-        public static final int playlist_track=0x7f090012;
+        public static final int playlist_track=0x7f090010;
         public static final int prev_button=0x7f09000d;
         public static final int stop_button=0x7f09000c;
         public static final int track_item=0x7f090013;

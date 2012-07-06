@@ -22,9 +22,8 @@ public class NetworkMusicModel extends MusicModel {
 
     public NetworkMusicModel() {
         super();
-        _library = new Library();
+        _library = new Library(this);
         json_url = Preferences.getString(Preferences.Name.json_url);
-//        json_url = "http://google.com/asdf";
         fetchJson();
     }
 
@@ -44,6 +43,13 @@ public class NetworkMusicModel extends MusicModel {
         }
     }
 
+    public String getPath(Track track) {
+        return Preferences.getString(Preferences.Name.stream_url) + "/" +
+               HttpUtil.encode(track.getAlbum().getArtist().toString()) + "/" +
+               HttpUtil.encode(track.getAlbum().toString()) + "/" +
+               HttpUtil.encode(track.getName());
+    }
+
     private void parseJson(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
@@ -59,23 +65,23 @@ public class NetworkMusicModel extends MusicModel {
             if(artist.equals(".DS_Store")) {
                 continue;
             }
-            Artist artistObject = new Artist(artist);
+            Artist artistObject = new Artist(_library,artist);
             try {
                 JSONObject albumJsonObject = json.getJSONObject(artist);
                 for (Iterator<?> j = albumJsonObject.keys(); j.hasNext(); ) {
                     String album = j.next().toString();
-                    Album albumObject = new Album(artist, album);
+                    Album albumObject = new Album(artistObject, album);
                     artistObject.addAlbum(albumObject);
                     JSONObject trackJsonObject = albumJsonObject.getJSONObject(album);
                     for (Iterator<?> l = trackJsonObject.keys(); l.hasNext(); ) {
                         String track = l.next().toString();
-                        Track trackObject = new Track(artist, album, track);
+                        Track trackObject = new Track(albumObject, track);
                         albumObject.addTrack(trackObject);
                     }
                     albumObject.sortTracks();
                 }
             } catch (JSONException e) {
-                Logger.error("Something funny happend parsing the json: " + e.getMessage());
+                Logger.error("Something funny happened parsing the json: " + e.getMessage());
             }
             artistObject.sortAlbums();
             _library.addArtist(artistObject);

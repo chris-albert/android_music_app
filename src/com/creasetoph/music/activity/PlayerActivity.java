@@ -31,6 +31,10 @@ public class PlayerActivity extends Activity {
         _controller = PlayerController.getInstance();
         setContentView(R.layout.player_view);
         attachButtonListeners();
+    }
+
+    public void onResume() {
+        super.onResume();
         setPlayPause();
     }
 
