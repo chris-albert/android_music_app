@@ -18,9 +18,11 @@ public class PlaylistController {
     private Sound    _sound;
     private Boolean  _playing;
     private Boolean  _paused;
+    private boolean _prepared = false;
     private MediaPlayer.OnPreparedListener _onPreparedListener = new MediaPlayer.OnPreparedListener() {
         public void onPrepared(MediaPlayer mediaPlayer) {
             _sound.play();
+            _prepared = true;
             _paused = false;
             _playing = true;
         }
@@ -47,6 +49,16 @@ public class PlaylistController {
                 next();
             }
         });
+        _sound.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {
+            @Override
+            public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
+                bufferUpdate(i);
+            }
+        });
+    }
+
+    private void bufferUpdate(int i) {
+        Logger.info("BufferingUpdate: " + i);
     }
 
     public void addToPlaylist(Track track) {
@@ -74,6 +86,7 @@ public class PlaylistController {
             String path = _playlist.getCurrentPlaylistTrackPath();
             Logger.info("Loading: " + path);
             if (path != null) {
+                _prepared = false;
                 _sound.load(path);
             }
         }
@@ -133,5 +146,19 @@ public class PlaylistController {
 
     public ArrayList<Track> getPlaylistItems() {
         return _playlist.getPlaylistTracks();
+    }
+
+    public int getCurrentPosition() {
+        if(_prepared) {
+            return _sound.getCurrentPosition();
+        }
+        return 0;
+    }
+
+    public int getDuration() {
+        if(_prepared) {
+            return _sound.getDuration();
+        }
+        return 0;
     }
 }

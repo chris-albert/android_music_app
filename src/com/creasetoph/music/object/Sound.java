@@ -37,6 +37,10 @@ public class Sound {
         _mediaPlayer.setOnCompletionListener(listener);
     }
 
+    public void setOnBufferingUpdateListener(MediaPlayer.OnBufferingUpdateListener listener) {
+        _mediaPlayer.setOnBufferingUpdateListener(listener);
+    }
+
     /**
      * Loads an url for streaming through the media player
      * @param url Url to stream media from
@@ -86,5 +90,16 @@ public class Sound {
      */
     public void stop() {
         _mediaPlayer.stop();
+    }
+
+    public int getCurrentPosition() {
+        return _mediaPlayer.getCurrentPosition();
+    }
+
+    public int getDuration() {
+        return _mediaPlayer.getDuration();
+    }
+
+    public void getLoaded() {
     }
 }

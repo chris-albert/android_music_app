@@ -52,7 +52,6 @@ public class PlaylistAdapter extends ArrayAdapter<Track> {
      * @return Updated view with item added to it
      */
     public View getView(int position, View v, ViewGroup parent) {
-        Logger.debug("PlaylistAdapter position: " + position);
         Track item = getItem(position);
         LayoutInflater li = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         v = li.inflate(R.layout.playlist_item,null);

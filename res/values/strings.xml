@@ -8,12 +8,16 @@
     <string name="play">Play</string>
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
-    <string name="next">Next &gt;</string>
-    <string name="prev">&lt; Prev</string>
+    <string name="next">&gt;&gt;</string>
+    <string name="prev">&lt;&lt;</string>
     <string name="library_loading">Library loading, please wait.</string>
     <string name="library_fail">There was a problem loading library.</string>
     <string name="retry">Retry</string>
     <string name="action_button">Action Button</string>
     <string name="album_title">Albums</string>
     <string name="track_title">Tracks</string>
+    <string name="percent">%</string>
+    <string name="colon">:</string>
+    <string name="default_percent">0</string>
+    <string name="default_time">00</string>
 </resources>
